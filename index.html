@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Química CBC · 2° parcial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f4ee;--card:#fff;--ink:#1f2330;--muted:#6b6f7c;--line:#e6e1d6;
+  --u0:#3d5a80;--u8:#1e88c7;--u10:#e2711d;--u9:#0f9d8a;--u11:#7b4fd1;--u13:#d6336c;--ok:#2b9348;--bad:#d62828;
+  --body:"DM Sans",system-ui,sans-serif;--head:"Fraunces",Georgia,serif;
+  --c:var(--u0);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body)}
+.top{position:sticky;top:0;z-index:20;background:rgba(247,244,238,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{max-width:960px;margin:0 auto;padding:10px 16px 0;display:flex;align-items:baseline;gap:10px}
+.brand b{font:800 1.15rem var(--head)}
+.brand span{color:var(--muted);font-size:.85rem}
+.tabs{max-width:960px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:8px 16px 10px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;text-decoration:none;color:var(--ink);font-weight:700;font-size:.9rem;padding:7px 12px;border-radius:999px;border:1.5px solid var(--line);background:#fff;white-space:nowrap}
+.tabs a small{display:block;font-weight:500;font-size:.68rem;color:var(--muted);line-height:1.1}
+.tabs a.on{background:var(--tc);border-color:var(--tc);color:#fff}
+.tabs a.on small{color:rgba(255,255,255,.85)}
+main{max-width:960px;margin:0 auto;padding:18px 16px 80px}
+section.view{display:none}
+section.view.on{display:block}
+.hero{border-radius:20px;padding:22px 20px;color:#fff;background:var(--c);margin-bottom:18px;position:relative;overflow:hidden}
+.hero h1{font:800 1.7rem/1.15 var(--head);margin:0 0 6px}
+.hero p{margin:0;opacity:.92}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.12)}
+h2{font:800 1.35rem var(--head);margin:30px 0 10px;color:var(--c)}
+h3{font-size:1.05rem;margin:20px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:12px 0}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.f{font-family:"Cambria Math",Georgia,serif;font-size:1.08rem;background:#fbfaf7;border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin:8px 0;text-align:center}
+.f.big{font-size:1.3rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:6px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c)}
+.warn{border-left:5px solid var(--bad);background:#fff4f2}
+.tip{border-left:5px solid var(--c);background:color-mix(in srgb,var(--c) 7%,#fff)}
+.key{border-left:5px solid #f2b705;background:#fffaea}
+table{border-collapse:collapse;width:100%;font-size:.93rem;background:#fff}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:color-mix(in srgb,var(--c) 10%,#fff)}
+.tw{overflow-x:auto;margin:10px 0;border-radius:12px;border:1px solid var(--line)}
+.tw table{border:0}
+.tw th:first-child,.tw td:first-child{border-left:0}
+.tw th:last-child,.tw td:last-child{border-right:0}
+.tw tr:first-child th{border-top:0}
+.tw tr:last-child td{border-bottom:0}
+td.c,th.c{text-align:center}
+.hl{background:#fff4c2;font-weight:700}
+.up{color:var(--ok);font-weight:800}.dn{color:var(--bad);font-weight:800}
+details.eye{margin:8px 0;border-radius:12px;border:1.5px solid color-mix(in srgb,var(--c) 30%,#fff);background:#fff}
+details.eye>summary{cursor:pointer;list-style:none;padding:8px 12px;font-weight:700;color:var(--c);user-select:none}
+details.eye>summary::-webkit-details-marker{display:none}
+details.eye>summary::before{content:"👁 ";}
+details.eye[open]>summary{border-bottom:1px dashed var(--line)}
+details.eye>div{padding:8px 14px 12px}
+.ex{font-weight:500}
+.ex b.q{color:var(--c)}
+/* dilution bars */
+.dil{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.bar{display:flex;height:46px;border-radius:10px;overflow:hidden;border:2px solid #334}
+.bar span{flex:1;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;border-right:2px dashed #334}
+.bar span:last-child{border-right:0}
+.bar .st{background:#f4a259;color:#3b1f00}
+.bar .sv{background:#cfe8fc;color:#0b3d66}
+.leg{font-size:.85rem;color:var(--muted)}
+.leg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin:0 4px 0 10px;border:1px solid #334}
+/* slides */
+.slides{background:#fff;border:1px solid var(--line);border-radius:16px;margin:12px 0;overflow:hidden}
+.slides .sh{display:flex;align-items:center;gap:8px;padding:10px 14px;background:color-mix(in srgb,var(--c) 9%,#fff);font-weight:800}
+.slides .sh .n{margin-left:auto;white-space:nowrap;font-size:.8rem;color:var(--muted);font-weight:700}
+.slide{display:none;padding:12px 16px}
+.slide.on{display:block}
+.snav{display:flex;gap:8px;padding:0 14px 12px;align-items:center}
+.snav button{border:0;border-radius:10px;padding:8px 14px;font:700 .9rem var(--body);background:var(--c);color:#fff;cursor:pointer}
+.snav button:disabled{opacity:.35;cursor:default}
+.dots{display:flex;gap:5px;margin:0 auto}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--c)}
+/* topic chips */
+.t-gas{--tc:var(--u8)}.t-sol{--tc:var(--u9)}.t-est{--tc:var(--u10)}.t-cin{--tc:var(--u11)}.t-eq{--tc:#9c6644}.t-ab{--tc:var(--u13)}
+.chip{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.78rem;font-weight:800;color:#fff;background:var(--tc)}
+.pmap{display:grid;gap:8px}
+.prow{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:start;background:#fff;border:1px solid var(--line);border-left:6px solid var(--tc);border-radius:12px;padding:10px 12px}
+.prow .num{font:800 1.5rem/1 var(--head);color:var(--tc);text-align:center}
+.prow p{margin:3px 0 0;font-size:.9rem;color:var(--muted)}
+/* quiz */
+.practice{margin-top:36px;border-radius:20px;border:2px solid var(--c);background:#fff;padding:16px}
+.practice h2{margin-top:0}
+.modes{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+.btn{border:1.5px solid var(--c);color:var(--c);background:#fff;border-radius:12px;padding:8px 12px;font:700 .9rem var(--body);cursor:pointer}
+.btn.fill{background:var(--c);color:#fff}
+.btn:disabled{opacity:.4;cursor:default}
+.qbox .qh{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);font-weight:700}
+.prog{height:6px;border-radius:9px;background:var(--line);margin:6px 0 12px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--c)}
+.qtext{font-weight:700;font-size:1.05rem;margin:4px 0 10px}
+.opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;margin:7px 0;font:500 .97rem var(--body);color:var(--ink);cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--c)}
+.opt b{display:inline-block;width:22px;color:var(--c)}
+.opt.ok{border-color:var(--ok);background:#eaf7ee}
+.opt.bad{border-color:var(--bad);background:#fdeceb}
+.opt:disabled{cursor:default}
+.why{margin-top:10px;padding:10px 12px;border-radius:12px;background:#f6f3ff;font-size:.93rem}
+.why.okk{background:#eaf7ee}.why.badd{background:#fdeceb}
+.qnav{display:flex;gap:8px;justify-content:space-between;margin-top:12px}
+.sum{text-align:center;padding:10px}
+.sum .big{font:800 2.4rem var(--head);color:var(--c)}
+.stat{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.meter{height:10px;border-radius:9px;background:#f0ece4;overflow:hidden;display:flex}
+.meter .g{background:var(--ok)}.meter .r{background:var(--bad)}
+.pcard{border-left:6px solid var(--tc)}
+.pcard h3{margin:0 0 6px;color:var(--tc)}
+.pcard .btn{--c:var(--tc)}
+.small{font-size:.86rem;color:var(--muted)}
+svg text{font-family:var(--body)}
+@media (max-width:560px){.hero h1{font-size:1.4rem}h2{font-size:1.2rem}.prow{grid-template-columns:34px 1fr}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><b>Química CBC · 2° parcial</b><span>por SOLved</span></div>
+  <nav class="tabs" id="tabs">
+    <a href="#identificar" style="--tc:var(--u0)">🧭 Identificar<small>¿qué ejercicio es?</small></a>
+    <a href="#u8" style="--tc:var(--u8)">U8 Gases<small>leyes · Dalton</small></a>
+    <a href="#u10" style="--tc:var(--u10)">U10 Reacciones<small>redox · estequio</small></a>
+    <a href="#u9" style="--tc:var(--u9)">U9 Soluciones<small>concentración · dilución</small></a>
+    <a href="#u11" style="--tc:var(--u11)">U11 Cinética<small>+ Le Chatelier</small></a>
+    <a href="#u13" style="--tc:var(--u13)">U13 Ácido-base<small>pH · Ka · Kb</small></a>
+    <a href="#panel" style="--tc:#333">📊 Panel<small>falladas · progreso</small></a>
+  </nav>
+</header>
+<main>
+<section class="view" id="identificar" style="--c:var(--u0)">
+<div class="hero"><h1>🧭 ¿De qué tema es este ejercicio?</h1><p>Antes de hacer cuentas, hay que saber <b>qué tipo de ejercicio</b> es. El 2° parcial es casi siempre igual: 10 ejercicios, y cada número suele ser del mismo tema.</p></div>
+
+<h2>El mapa del parcial (los 4 modelos)</h2>
+<p class="small">Mirando los 4 modelos de 2° parcial de la página, el orden se repite así. Los ejercicios 3 y 6 tienen dos ítems (a y b). Se aprueba con 6 ítems bien de 12.</p>
+<div class="pmap">
+  <div class="prow t-gas"><div class="num">1</div><div><span class="chip">Gases · teoría</span> Pregunta para justificar: densidad de un gas, teoría cinética, presión parcial.<p>Ej: “¿la densidad del O₂ es mayor, menor o igual que la del H₂?” · “¿qué pasa con la densidad si sube T con tapa móvil?”</p></div></div>
+  <div class="prow t-gas"><div class="num">2</div><div><span class="chip">Gases · cuenta</span> PV = nRT con un recipiente: se saca o se agrega un gas, mezclas, densidad de la mezcla.<p>Palabras: recipiente rígido, dm³, atm, K, “se extrae”, “se agrega Ar”.</p></div></div>
+  <div class="prow t-sol"><div class="num">3</div><div><span class="chip">Dilución + iones</span> Se diluye una sal (MgCl₂, CaCl₂, Al₂(SO₄)₃) y preguntan por la concentración de un <b>ion</b>.<p>¡Ojo con cuántos iones da cada sal! 1 MgCl₂ → 2 Cl⁻ · 1 Al₂(SO₄)₃ → 3 SO₄²⁻.</p></div></div>
+  <div class="prow t-sol"><div class="num">4</div><div><span class="chip">Unidades de concentración</span> Pasar entre %m/m, %m/V, M, usar densidad. Masa de soluto o de agua.<p>Palabras: %m/m, %m/V, densidad g/mL, “expresar en mg / kg”.</p></div></div>
+  <div class="prow t-est"><div class="num">5</div><div><span class="chip">Reacciones · redox</span> Balancear una ecuación redox iónica, o usar “agente oxidante / reductor” para hacer estequiometría.</div></div>
+  <div class="prow t-est"><div class="num">6</div><div><span class="chip">Estequiometría</span> Reactivo limitante, rendimiento, volumen de gas producido (a y b).</div></div>
+  <div class="prow t-est"><div class="num">7</div><div><span class="chip">Estequiometría</span> Pureza / impurezas, reactivo en exceso que sobra.</div></div>
+  <div class="prow t-eq"><div class="num">8</div><div><span class="chip">Equilibrio · Le Chatelier</span> Casi siempre: “¿qué perturbación desplaza hacia productos?” con una reacción exo/endotérmica. A veces: tabla de equilibrio con Kc.<p>Lo vemos en la pestaña U11.</p></div></div>
+  <div class="prow t-ab"><div class="num">9</div><div><span class="chip">Ácido-base · teórico</span> Ordenar por pH, por grado de disociación, elegir el pKa más fuerte, reconocer cuál es base débil.</div></div>
+  <div class="prow t-ab"><div class="num">10</div><div><span class="chip">Ácido-base · cuenta</span> Ácido (o base) débil con Ka: calcular [H₃O⁺], pH o Ka.</div></div>
+</div>
+<div class="card key"><b>Resumen en una línea:</b> 1–2 gases · 3–4 soluciones · 5–6–7 reacciones y estequiometría · 8 equilibrio (Le Chatelier) · 9–10 ácido-base.</div>
+
+<h2>Pistas: palabras que delatan el tema</h2>
+<div class="tw"><table>
+<tr><th>Tema</th><th>Si ves esto…</th></tr>
+<tr><td><span class="chip t-gas">Gases</span></td><td>atm, mmHg, “recipiente”, dm³, temperatura en K o °C, <b>(g)</b>, CNPT, presión parcial, densidad de un gas, R = 0,0821. <b>No hay reacción.</b></td></tr>
+<tr><td><span class="chip t-sol">Soluciones</span></td><td>M, %m/m, %m/V, %V/V, ppm, “solución acuosa de…”, densidad de la solución, “se diluye”, “se agrega agua”, iones / aniones / cationes. <b>No hay reacción.</b></td></tr>
+<tr><td><span class="chip t-est">Estequiometría</span></td><td>Hay una ecuación con <b>→</b> y te dan cantidades: “se hacen reaccionar”, rendimiento, pureza, impurezas, exceso, limitante, agente oxidante, balancear.</td></tr>
+<tr><td><span class="chip t-eq">Equilibrio</span></td><td>Flecha doble <b>⇌</b>, Kc, “en equilibrio”, exotérmica / endotérmica, “perturbación”, “evoluciona hacia”.</td></tr>
+<tr><td><span class="chip t-ab">Ácido-base</span></td><td>pH, pOH, [H₃O⁺], [OH⁻], Ka, Kb, pKa, “ácido …”, “base”, grado de disociación.</td></tr>
+<tr><td><span class="chip t-cin">Cinética</span></td><td>velocidad, M/s, mol/(L·s), ley de velocidad, orden, constante k, catalizador, energía de activación.</td></tr>
+</table></div>
+
+<h2>Preguntas para decidir rápido</h2>
+<div class="slides"><div class="sh">Árbol de decisión<span class="n"></span></div>
+<div class="slide"><p><b>1. ¿Pide pH, pOH, Ka, Kb o habla de ácidos/bases?</b></p><p>→ Sí: <span class="chip t-ab">Ácido-base</span>. Fin.</p><p class="small">Aunque haya ⇌, si habla de pH o Ka es ácido-base.</p></div>
+<div class="slide"><p><b>2. ¿Hay una flecha doble ⇌ o dice “equilibrio”, exotérmica / endotérmica?</b></p><p>→ Sí: <span class="chip t-eq">Equilibrio / Le Chatelier</span>.</p></div>
+<div class="slide"><p><b>3. ¿Hay una ecuación con → y cantidades (gramos, moles)?</b></p><p>→ Sí: <span class="chip t-est">Estequiometría</span>. Si además pide “balancear” o habla de oxidante / reductor, es redox.</p></div>
+<div class="slide"><p><b>4. ¿Hay una solución (M, %, se diluye) pero ninguna reacción?</b></p><p>→ Sí: <span class="chip t-sol">Soluciones</span>.</p></div>
+<div class="slide"><p><b>5. ¿Hay un gas en un recipiente (P, V, T) sin reacción?</b></p><p>→ Sí: <span class="chip t-gas">Gases</span>.</p></div>
+<div class="slide"><p><b>6. ¿Habla de velocidad, orden o k?</b></p><p>→ <span class="chip t-cin">Cinética</span>.</p></div>
+</div>
+
+<div class="card warn"><b>Ejercicios “mezcla”.</b> La estequiometría usa las otras unidades como herramientas:
+<ul style="margin:6px 0 0">
+<li>Te dan un reactivo en <b>solución</b> (ej. HCl 2,00 M) → moles = M × V(L). Sigue siendo estequiometría.</li>
+<li>Te piden el <b>volumen de un gas</b> producido → al final usás PV = nRT (o 22,4 L en CNPT). Sigue siendo estequiometría.</li>
+</ul>
+Regla: <b>el tema es el de la ecuación que manda</b>. Si hay reacción con →, es estequiometría.</div>
+
+<div class="practice" data-quiz="id"></div>
+</section>
+<section class="view" id="u8" style="--c:var(--u8)">
+<div class="hero"><h1>Unidad 8 · Gases</h1><p>Ejercicios 1 y 2 del parcial. Todo sale de PV = nRT y de mirar <b>qué se mantiene constante</b>.</p></div>
+
+<h2>1. Las variables y sus unidades</h2>
+<div class="tw"><table>
+<tr><th>Variable</th><th>Unidad que usamos</th><th>Equivalencias que aparecen</th></tr>
+<tr><td><b>P</b> presión</td><td>atm</td><td>1 atm = 760 mmHg = 101,3 kPa = 1013 hPa</td></tr>
+<tr><td><b>V</b> volumen</td><td>L (= dm³)</td><td>1 m³ = 1000 L · 1 L = 1000 mL = 1000 cm³</td></tr>
+<tr><td><b>T</b> temperatura</td><td><b>siempre K</b></td><td>T(K) = t(°C) + 273</td></tr>
+<tr><td><b>n</b> moles</td><td>mol</td><td>n = masa / masa molar</td></tr>
+</table></div>
+<div class="card key"><b>R = 0,0821 atm·L/(K·mol)</b>. Con esta R, todo tiene que estar en atm, L, mol y K.<br><b>CNPT</b> (condiciones normales): 0 °C = 273 K y 1 atm → 1 mol de cualquier gas ocupa <b>22,4 L</b>.</div>
+
+<h2>2. Teoría cinética de los gases</h2>
+<div class="card">
+<ul style="margin:0">
+<li>Los gases están formados por partículas que se mueven <b>todo el tiempo, al azar</b> y en línea recta.</li>
+<li>El volumen de las partículas es <b>despreciable</b> frente al volumen del recipiente.</li>
+<li>No hay atracciones ni repulsiones entre las partículas (gas ideal).</li>
+<li>Los choques son <b>elásticos</b> (no pierden energía).</li>
+<li>La <b>presión</b> es el resultado de los choques de las partículas contra las paredes.</li>
+<li>La <b>energía cinética media</b> es <b>directamente proporcional a la temperatura absoluta (K)</b>. Más T → se mueven más rápido.</li>
+</ul></div>
+<div class="card tip"><b>Así lo toman (ej. 1):</b> “Indicar la relación entre la energía cinética de las moléculas y la temperatura”. Respuesta: son directamente proporcionales; si T (en K) se duplica, la energía cinética media se duplica.</div>
+
+<h2>3. Las leyes, una por una</h2>
+<div class="card key"><b>Los nombres de los científicos no importan.</b> Están para ubicarte, pero nadie te va a pedir “Charles” en el parcial. Lo que importa es saber usar cada fórmula.</div>
+<p class="small">Truco: leé el enunciado y fijate <b>qué NO cambia</b>. Eso te dice qué ley usar. Todas salen de PV = nRT tachando lo constante.</p>
+<div class="tw"><table>
+<tr><th>Ley</th><th>Se mantiene constante</th><th>Fórmula</th><th>Qué pasa</th></tr>
+<tr><td><b>Boyle-Mariotte</b></td><td>T y n</td><td>P₁·V₁ = P₂·V₂</td><td>Si achico el V, la P sube (inversas)</td></tr>
+<tr><td><b>Charles</b></td><td>P y n</td><td>V₁/T₁ = V₂/T₂</td><td>Si caliento, el V sube (tapa móvil)</td></tr>
+<tr><td><b>Gay-Lussac</b></td><td>V y n</td><td>P₁/T₁ = P₂/T₂</td><td>Recipiente rígido: si caliento, la P sube</td></tr>
+<tr><td><b>Avogadro</b></td><td>P y T</td><td>V₁/n₁ = V₂/n₂</td><td>Más moles → más volumen</td></tr>
+<tr><td><b>Combinada</b></td><td>n</td><td>P₁V₁/T₁ = P₂V₂/T₂</td><td>Cambian P, V y T a la vez</td></tr>
+<tr><td><b>General</b></td><td>—</td><td>P·V = n·R·T</td><td>Un solo estado: te dan 3 datos, calculás el 4°</td></tr>
+</table></div>
+
+<div class="grid">
+<div class="card"><span class="tag">Boyle</span><p class="ex">Un gas ocupa 2,0 L a 1,5 atm. Se comprime a T constante hasta 0,50 L. <b class="q">¿Presión final?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>T constante → Boyle.<div class="f">1,5 atm · 2,0 L = P₂ · 0,50 L → P₂ = 6,0 atm</div>El volumen se dividió por 4 → la presión se multiplicó por 4.</div></details></div>
+<div class="card"><span class="tag">Charles</span><p class="ex">Un globo tiene 3,0 L a 27 °C. Se calienta a 127 °C a presión constante. <b class="q">¿Volumen final?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>Pasar a K: 300 K y 400 K.<div class="f">3,0 / 300 = V₂ / 400 → V₂ = 4,0 L</div>Si usás °C da cualquier cosa: <b>siempre K</b>.</div></details></div>
+<div class="card"><span class="tag">Gay-Lussac</span><p class="ex">Un tanque rígido tiene gas a 2,0 atm y 27 °C. Se calienta a 327 °C. <b class="q">¿Presión final?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>Rígido = V constante. 300 K → 600 K.<div class="f">2,0 / 300 = P₂ / 600 → P₂ = 4,0 atm</div></div></details></div>
+<div class="card"><span class="tag">Avogadro</span><p class="ex">2,0 mol de gas ocupan 50 L. <b class="q">¿Cuánto ocupan 3,0 mol</b> a la misma P y T?</p>
+<details class="eye"><summary>Ver resolución</summary><div><div class="f">50 / 2,0 = V₂ / 3,0 → V₂ = 75 L</div></div></details></div>
+<div class="card"><span class="tag">Combinada</span><p class="ex">Un gas en 9,30 m³ medido en CNPT se mete en un tanque rígido de 57,0 L a 20 °C. <b class="q">¿Presión?</b> (parecido al ej. 2 del modelo 2)</p>
+<details class="eye"><summary>Ver resolución</summary><div>9,30 m³ = 9300 L. Estado 1: 1 atm, 9300 L, 273 K. Estado 2: ? atm, 57,0 L, 293 K.<div class="f">P₂ = 1 · 9300 · 293 / (273 · 57,0) ≈ 175 atm</div></div></details></div>
+<div class="card"><span class="tag">PV = nRT</span><p class="ex">Hay 0,50 mol de gas en un recipiente de 10,0 L a 300 K. <b class="q">¿Presión?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div><div class="f">P = n·R·T / V = 0,50 · 0,0821 · 300 / 10,0 = 1,23 atm</div></div></details></div>
+</div>
+
+<h2>4. Densidad de un gas</h2>
+<div class="f big">δ = m / V &nbsp;&nbsp;→&nbsp;&nbsp; δ = P · M / (R · T)</div>
+<p class="small">M = masa molar (g/mol). Sale de reemplazar n = m/M en PV = nRT. La densidad da en g/L.</p>
+<div class="card tip"><b>Cómo razonar las preguntas de densidad (ej. 1):</b>
+<ul style="margin:6px 0 0">
+<li><b>Recipiente rígido y cerrado:</b> la masa y el volumen no cambian → la densidad <b>no cambia</b>, aunque cambie T.</li>
+<li><b>Tapa móvil (P constante) y sube T:</b> el gas se expande (V sube) con la misma masa → la densidad <b>disminuye</b>.</li>
+<li><b>Mismo V, misma T, mismos moles, gases distintos:</b> igual presión, pero el de mayor masa molar tiene más masa → <b>mayor densidad</b>. 1 mol O₂ (32 g) es más denso que 1 mol H₂ (2 g).</li>
+<li>A igual P y T, <b>más masa molar → más denso</b>.</li>
+</ul></div>
+<div class="card"><span class="tag">Densidad</span><p class="ex"><b class="q">¿Densidad del O₂</b> en CNPT?</p>
+<details class="eye"><summary>Ver resolución</summary><div><div class="f">δ = 1 · 32,0 / (0,0821 · 273) = 1,43 g/L</div>Otra forma: 1 mol (32 g) ocupa 22,4 L → 32/22,4 = 1,43 g/L.</div></details></div>
+
+<h2>5. Mezclas de gases · Dalton</h2>
+<div class="card"><b>Presión parcial</b> de un gas: la presión que ejercería ese gas si estuviera <b>solo</b> ocupando todo el recipiente, a la misma temperatura.</div>
+<div class="grid">
+<div class="f">P<sub>total</sub> = P<sub>A</sub> + P<sub>B</sub> + P<sub>C</sub> + …</div>
+<div class="f">x<sub>A</sub> = n<sub>A</sub> / n<sub>total</sub> &nbsp;(sin unidad, entre 0 y 1)</div>
+<div class="f">P<sub>A</sub> = x<sub>A</sub> · P<sub>total</sub></div>
+<div class="f">P<sub>A</sub> · V = n<sub>A</sub> · R · T</div>
+</div>
+<div class="card key">Las fracciones molares suman <b>1</b>. Cada gas “se porta” como si estuviera solo: si agregás otro gas a un recipiente rígido, la presión parcial de los que ya estaban <b>no cambia</b> (sus moles, V y T son los mismos); lo que sube es la presión total.</div>
+<div class="grid">
+<div class="card"><span class="tag">Dalton</span><p class="ex">Un recipiente de 10,0 L a 300 K tiene 0,30 mol de N₂ y 0,10 mol de O₂. <b class="q">¿P total y presiones parciales?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>n total = 0,40 mol.<div class="f">P<sub>T</sub> = 0,40 · 0,0821 · 300 / 10,0 = 0,985 atm</div>x(N₂) = 0,30/0,40 = 0,75 → P(N₂) = 0,75 · 0,985 = 0,739 atm<br>x(O₂) = 0,25 → P(O₂) = 0,246 atm. Suman 0,985 ✔</div></details></div>
+<div class="card"><span class="tag">Sacar un gas</span><p class="ex">Recipiente rígido de 10,0 L con 15,3 g de N₂ y 5,20 g de O₂ a 150 K. Se extrae todo el O₂. <b class="q">¿Presión final?</b> (ej. 2, modelo 1)</p>
+<details class="eye"><summary>Ver resolución</summary><div>Si se va el O₂ queda solo el N₂. Lo único que importa son sus moles: 15,3 / 28,0 = 0,546 mol.<div class="f">P = 0,546 · 0,0821 · 150 / 10,0 = 0,672 atm</div>Es la presión parcial que tenía el N₂ antes.</div></details></div>
+</div>
+
+<div class="practice" data-quiz="u8"></div>
+</section>
+<section class="view" id="u10" style="--c:var(--u10)">
+<div class="hero"><h1>Unidad 10 · Reacciones y estequiometría</h1><p>Ejercicios 5, 6 y 7. La vemos antes que soluciones porque la idea de “1 mol de sal da varios moles de iones” se usa después en todo.</p></div>
+
+<h2>1. Cómo se escribe una ecuación</h2>
+<div class="card">
+<div class="f big">2 Al (s) + 3 Cu²⁺ (ac) → 2 Al³⁺ (ac) + 3 Cu (s)</div>
+<ul style="margin:6px 0 0">
+<li><b>Izquierda:</b> reactivos. <b>Derecha:</b> productos.</li>
+<li><b>Coeficientes</b> (los números grandes adelante): cuántos <b>moles</b> de cada uno. Es lo único que se toca para balancear.</li>
+<li><b>Subíndices</b> (los chiquitos): la fórmula de la sustancia. <b>Nunca se cambian</b> (si cambiás H₂O por H₂O₂ cambiaste de sustancia).</li>
+</ul></div>
+<div class="grid">
+<div class="card"><b>Estados de agregación</b><br>(s) sólido · (l) líquido · (g) gas · (ac) o (aq) disuelto en agua.<br><span class="small">El agua como producto suele ir (l). Un ácido o sal en solución va (ac).</span></div>
+<div class="card"><b>Flechas</b><br><b>→</b> la reacción ocurre completa (estequiometría).<br><b>⇌</b> equilibrio: va y vuelve, no se completa (Le Chatelier, ácidos débiles).</div>
+</div>
+
+<h2>2. ¿Es redox o no?</h2>
+<p>Una reacción es <b>redox</b> si <b>algún elemento cambia su número de oxidación (N.O.)</b>. Para saberlo, calculás el N.O. de cada elemento de los dos lados.</p>
+<div class="tw"><table>
+<tr><th>Regla para el N.O.</th><th>Ejemplo</th></tr>
+<tr><td>Elemento solo (sin combinar) = <b>0</b></td><td>Al(s), Cu(s), Fe(s), O₂, Cl₂, I₂, H₂ → 0</td></tr>
+<tr><td>Ion de un solo átomo = su carga</td><td>Cu²⁺ → +2 · Al³⁺ → +3 · Cl⁻ → −1</td></tr>
+<tr><td>O casi siempre <b>−2</b> · H casi siempre <b>+1</b></td><td>en H₂O: H +1, O −2</td></tr>
+<tr><td>La suma da 0 en una molécula, o la carga en un ion</td><td>MnO₂: Mn + 2(−2) = 0 → Mn = +4</td></tr>
+</table></div>
+<div class="card tip"><b>Pista rápida:</b> si un elemento está <b>solo</b> de un lado (Al(s), Cl₂, Fe(s)) y <b>combinado</b> del otro, es redox seguro. Las neutralizaciones (ácido + base) y las descomposiciones tipo CaCO₃ → CaO + CO₂ <b>no</b> son redox: nadie cambia de N.O.</div>
+
+<h3>Oxidante y reductor (lo toman en el ej. 5)</h3>
+<div class="grid">
+<div class="card"><b class="dn">Se reduce</b>: gana electrones, su N.O. <b>baja</b>.<br>→ Es el <b>agente oxidante</b>.</div>
+<div class="card"><b class="up">Se oxida</b>: pierde electrones, su N.O. <b>sube</b>.<br>→ Es el <b>agente reductor</b>.</div>
+</div>
+<div class="card key">Frase para acordarse: <b>“el oxidante se reduce, el reductor se oxida”</b> (siempre al revés de su nombre).</div>
+<div class="grid">
+<div class="card"><span class="tag">Ejemplo</span><p class="ex">MnO₂ + 4 HCl → MnCl₂ + Cl₂ + 2 H₂O. <b class="q">¿Quién es el oxidante?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>Mn: +4 en MnO₂ → +2 en MnCl₂ (baja, se reduce) → <b>MnO₂ es el oxidante</b>.<br>Cl: −1 en HCl → 0 en Cl₂ (sube, se oxida) → HCl es el reductor.</div></details></div>
+<div class="card"><span class="tag">Ejemplo</span><p class="ex">Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂. <b class="q">¿Oxidante y reductor?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>Fe: +3 → 0 (se reduce) → <b>Fe₂O₃ oxidante</b>.<br>C: +2 en CO → +4 en CO₂ (se oxida) → <b>CO reductor</b>.</div></details></div>
+</div>
+
+<h2>3. Balancear</h2>
+<div class="grid">
+<div class="card"><b>No redox → tanteo</b><br>Orden: 1) metales, 2) no metales, 3) H, 4) O al final. Contá átomos de cada lado.</div>
+<div class="card"><b>Redox → igualar electrones</b><br>Los electrones que pierde uno los gana el otro. Además de átomos, <b>la carga total tiene que ser igual</b> de los dos lados.</div>
+</div>
+<div class="slides"><div class="sh">Balanceo redox paso a paso: Al + Cu²⁺<span class="n"></span></div>
+<div class="slide"><div class="f">Al (s) + Cu²⁺ (ac) → Al³⁺ (ac) + Cu (s)</div><p>Así viene en el parcial (modelos 1 y 3). Si contás átomos parece balanceada… pero mirá las cargas: izquierda +2, derecha +3. <b>No está balanceada.</b></p></div>
+<div class="slide"><p><b>Paso 1: quién pierde y quién gana.</b></p><p>Al: 0 → +3 → <b>pierde 3 e⁻</b> (se oxida)</p><p>Cu: +2 → 0 → <b>gana 2 e⁻</b> (se reduce)</p></div>
+<div class="slide"><p><b>Paso 2: igualar electrones.</b> El mínimo común múltiplo de 3 y 2 es 6.</p><p>Al × 2 → pierde 6 e⁻<br>Cu × 3 → gana 6 e⁻</p></div>
+<div class="slide"><div class="f big">2 Al (s) + 3 Cu²⁺ (ac) → 2 Al³⁺ (ac) + 3 Cu (s)</div><p><b>Control:</b> Al 2 = 2 ✔ · Cu 3 = 3 ✔ · carga: 3·(+2) = +6 a la izquierda y 2·(+3) = +6 a la derecha ✔</p></div>
+</div>
+
+<h2>4. ⭐ Las sales se separan en iones (no siempre 1 a 1)</h2>
+<p>Cuando una sal se disuelve en agua se separa en sus iones. <b>La cantidad de cada ion depende de los subíndices</b>. Esto cambia las concentraciones de aniones y cationes.</p>
+<div class="f big">Al₂(SO₄)₃ (s) → 2 Al³⁺ (ac) + 3 SO₄²⁻ (ac)</div>
+<div class="card key"><b>1 mol</b> de Al₂(SO₄)₃ da <b>2 moles</b> de Al³⁺ y <b>3 moles</b> de SO₄²⁻.<br>Entonces, si la sal está 0,150 M: [Al³⁺] = 2 × 0,150 = <b>0,300 M</b> y [SO₄²⁻] = 3 × 0,150 = <b>0,450 M</b>.</div>
+<div class="tw"><table>
+<tr><th>Sal</th><th>Se separa en</th><th>1 mol de sal da…</th></tr>
+<tr><td>NaCl</td><td>Na⁺ + Cl⁻</td><td>1 catión + 1 anión</td></tr>
+<tr><td>AgNO₃ · KNO₃</td><td>Ag⁺ + NO₃⁻</td><td>1 + 1</td></tr>
+<tr><td>MgCl₂ · CaCl₂ · FeCl₂</td><td>Mg²⁺ + <b>2</b> Cl⁻</td><td>1 catión + <b>2 aniones</b></td></tr>
+<tr><td>Na₂SO₄</td><td><b>2</b> Na⁺ + SO₄²⁻</td><td><b>2 cationes</b> + 1 anión</td></tr>
+<tr><td>Al₂(SO₄)₃</td><td><b>2</b> Al³⁺ + <b>3</b> SO₄²⁻</td><td><b>2 cationes + 3 aniones</b></td></tr>
+<tr><td>AlCl₃</td><td>Al³⁺ + <b>3</b> Cl⁻</td><td>1 + 3</td></tr>
+</table></div>
+<div class="card warn"><b>Errores típicos:</b><br>• Los iones de varios átomos (SO₄²⁻, NO₃⁻, CO₃²⁻, PO₄³⁻, NH₄⁺) <b>no se rompen</b>: el SO₄²⁻ queda entero, no se separa en S y O.<br>• El subíndice de afuera del paréntesis (el 3 de (SO₄)₃) indica cuántos SO₄²⁻ hay.<br>• Si te preguntan por “aniones” en MgCl₂, son los Cl⁻: el doble que la sal.</div>
+
+<h2>5. ⭐ La tablita de estequiometría</h2>
+<p>Siempre armamos la misma tabla. Las columnas son las sustancias; las filas, estos pasos:</p>
+<div class="tw"><table>
+<tr><th>Fila</th><th>De dónde sale</th></tr>
+<tr><td><b>Moles teóricos</b></td><td>Los coeficientes de la ecuación balanceada</td></tr>
+<tr><td><b>Moles que tengo</b></td><td>Los datos: masa ÷ masa molar · M × V(L) · PV/RT</td></tr>
+<tr><td><b>Moles que necesito</b></td><td>Regla de tres con los teóricos, para el otro reactivo</td></tr>
+<tr><td><b>Moles que reaccionan</b></td><td>Los del <b>limitante</b> (y lo que le corresponde al otro)</td></tr>
+<tr><td><b>Sobra / se forma</b></td><td>Tengo − reaccionan (exceso) · productos por regla de tres</td></tr>
+</table></div>
+<div class="slides"><div class="sh">Ejemplo con la tablita (ej. 7, modelo 2)<span class="n"></span></div>
+<div class="slide"><div class="f">Cr₂O₃ (s) + 2 Al (s) → 2 Cr (l) + Al₂O₃ (s)</div><p>Se mezclan <b>38,0 g de Cr₂O₃</b> con <b>18,0 g de Al</b>. Rendimiento 100 %. ¿Qué masa del reactivo en exceso sobra?</p><p class="small">Masas molares: Cr₂O₃ = 152 g/mol · Al = 27,0 g/mol</p></div>
+<div class="slide"><p><b>Fila 1 y 2: teóricos y tengo</b></p><div class="tw"><table><tr><th></th><th class="c">Cr₂O₃</th><th class="c">Al</th></tr><tr><td>Teóricos</td><td class="c">1</td><td class="c">2</td></tr><tr><td>Tengo</td><td class="c">38,0/152 = 0,250</td><td class="c">18,0/27,0 = 0,667</td></tr></table></div></div>
+<div class="slide"><p><b>Fila 3: ¿cuánto Al necesito para todo el Cr₂O₃?</b></p><p>1 mol Cr₂O₃ — 2 mol Al<br>0,250 mol Cr₂O₃ — x = <b>0,500 mol Al</b></p><div class="tw"><table><tr><th></th><th class="c">Cr₂O₃</th><th class="c">Al</th></tr><tr><td>Tengo</td><td class="c">0,250</td><td class="c">0,667</td></tr><tr><td>Necesito</td><td class="c">—</td><td class="c hl">0,500</td></tr></table></div><p>Tengo 0,667 y necesito 0,500 → <b>me sobra Al</b>. El limitante es el <b>Cr₂O₃</b>.</p></div>
+<div class="slide"><p><b>Fila 4 y 5: reaccionan y sobran</b></p><div class="tw"><table><tr><th></th><th class="c">Cr₂O₃</th><th class="c">Al</th></tr><tr><td>Reaccionan</td><td class="c">0,250</td><td class="c">0,500</td></tr><tr><td>Sobran</td><td class="c">0</td><td class="c hl">0,667 − 0,500 = 0,167</td></tr></table></div><div class="f">0,167 mol × 27,0 g/mol = 4,50 g de Al sin reaccionar</div></div>
+</div>
+<div class="card warn"><b>Ojo con lo “no equimolar”:</b> los moles de un lado y del otro <b>no tienen por qué ser iguales</b>. En la ecuación de arriba, 1 mol de Cr₂O₃ reacciona con 2 de Al. Siempre hacé la regla de tres con los coeficientes, nunca asumas 1 a 1. Y la masa sí se conserva, los moles no.</div>
+
+<h2>6. Pureza y rendimiento</h2>
+<div class="grid">
+<div class="card"><b>Pureza</b> → se aplica al <b>reactivo</b>, al principio.<div class="f">masa pura = masa muestra × pureza / 100</div><span class="small">Impurezas “inertes” = no reaccionan. % impurezas = 100 − % pureza.</span></div>
+<div class="card"><b>Rendimiento</b> → se aplica al <b>producto</b>, al final.<div class="f">real = teórico × R / 100<br>R = real / teórico × 100</div><span class="small">Teórico = lo que daría la cuenta si todo saliera perfecto (100 %).</span></div>
+</div>
+<div class="card key">Orden de una cuenta completa: <b>muestra → × pureza → moles → regla de tres → producto teórico → × rendimiento → producto real</b>.</div>
+<div class="grid">
+<div class="card"><span class="tag">Pureza</span><p class="ex">142 g de una muestra de CaCO₃ dan 42,6 g de CO₂ (R = 100 %). CaCO₃ → CaO + CO₂. <b class="q">¿Pureza?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>Desde el producto hacia atrás: 42,6 g / 44,0 = 0,968 mol CO₂ → 1:1 → 0,968 mol CaCO₃ puro × 100 = 96,8 g.<div class="f">pureza = 96,8 / 142 × 100 = 68,2 %</div></div></details></div>
+<div class="card"><span class="tag">Rendimiento</span><p class="ex">I₂ + 10 HNO₃ → 2 HIO₃ + … Con 2,00 g de I₂ se obtienen 2,20 g de HIO₃. <b class="q">¿Rendimiento?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>2,00 / 254 = 7,88×10⁻³ mol I₂ → ×2 = 1,58×10⁻² mol HIO₃ × 176 g/mol = 2,77 g (teórico).<div class="f">R = 2,20 / 2,77 × 100 = 79,4 %</div></div></details></div>
+<div class="card"><span class="tag">Solución + exceso</span><p class="ex">152 g de MgCO₃ + 2500 cm³ de HCl 2,00 M. MgCO₃ + 2 HCl → MgCl₂ + CO₂ + H₂O. <b class="q">¿Qué sobra?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>MgCO₃: 152 / 84,3 = 1,80 mol. HCl: 2,00 M × 2,50 L = 5,00 mol.<br>Necesito HCl: 2 × 1,80 = 3,61 mol &lt; 5,00 → MgCO₃ limitante.<div class="f">sobra HCl: 5,00 − 3,61 = 1,39 mol × 36,5 = 50,8 g</div>Si R = 75 %: CO₂ = 1,80 × 0,75 = 1,35 mol.</div></details></div>
+</div>
+
+<div class="practice" data-quiz="u10"></div>
+</section>
+<section class="view" id="u9" style="--c:var(--u9)">
+<div class="hero"><h1>Unidad 9 · Soluciones y diluciones</h1><p>Ejercicios 3 y 4. Saber qué significa cada unidad es la mitad del ejercicio.</p></div>
+
+<h2>1. Las partes de una solución</h2>
+<div class="grid">
+<div class="card"><b>Soluto</b>: lo que se disuelve (suele estar en menor cantidad).<br><b>Solvente</b>: lo que disuelve (en mayor cantidad; casi siempre agua).<br><b>Solución</b>: la mezcla homogénea de los dos.</div>
+<div class="card"><div class="f">masa solución = masa soluto + masa solvente</div><div class="f">δ<sub>solución</sub> = masa solución / volumen solución</div><span class="small">La densidad es el <b>puente</b> entre mL y g de solución. <b>No</b> es una concentración.</span></div>
+</div>
+
+<h2>2. Unidades de concentración</h2>
+<div class="tw"><table>
+<tr><th>Unidad</th><th>Qué significa</th><th>Ejemplo: “cómo se lee”</th></tr>
+<tr><td><b>% m/m</b></td><td>g de soluto en <b>100 g de solución</b></td><td>15 % m/m → 15 g soluto en 100 g de solución (y 85 g de agua)</td></tr>
+<tr><td><b>% m/V</b></td><td>g de soluto en <b>100 mL de solución</b></td><td>2,5 % m/V → 2,5 g en 100 mL de solución</td></tr>
+<tr><td><b>% V/V</b></td><td>mL de soluto en <b>100 mL de solución</b></td><td>12 % V/V (vino) → 12 mL de alcohol en 100 mL</td></tr>
+<tr><td><b>g/L</b></td><td>g de soluto en <b>1 L de solución</b></td><td>25 g/L = 2,5 % m/V (dividís por 10)</td></tr>
+<tr><td><b>ppm</b></td><td>mg de soluto en 1 L (o 1 kg) de solución</td><td>5 ppm → 5 mg en 1 L</td></tr>
+<tr><td><b>M</b> (molaridad)</td><td>moles de soluto en <b>1 L de solución</b></td><td>0,5 M → 0,5 mol en 1 L de solución</td></tr>
+<tr><td><b>m</b> (molalidad)</td><td>moles de soluto en <b>1 kg de solvente</b></td><td>2 m → 2 mol cada 1 kg de agua</td></tr>
+<tr><td><b>x</b> (fracción molar)</td><td>n soluto / (n soluto + n solvente)</td><td>sin unidad, entre 0 y 1</td></tr>
+</table></div>
+<div class="card warn"><b>Fijate siempre “cada 100 de QUÉ”:</b> % m/m y % m/V son cada 100 de <b>solución</b>, no de agua. La molalidad es la única que va por kg de <b>solvente</b>.<br>Las que usan solo masas (% m/m, molalidad, fracción molar) no cambian con la temperatura; las que usan volumen (M, % m/V) sí.</div>
+
+<h3>Cómo pasar de una a otra</h3>
+<div class="grid">
+<div class="card"><b>% m/V ↔ M</b>: necesitás la <b>masa molar</b>.<br>% m/V × 10 = g/L → ÷ masa molar = M.</div>
+<div class="card"><b>% m/m ↔ M o % m/V</b>: necesitás además la <b>densidad de la solución</b> (para pasar de g de solución a mL).</div>
+</div>
+<div class="grid">
+<div class="card"><span class="tag">Con densidad</span><p class="ex">8,00 L de solución de KNO₃ 15,0 % m/m, δ = 1,09 g/mL. <b class="q">¿Masa de soluto?</b> (ej. 4, modelo 3)</p>
+<details class="eye"><summary>Ver resolución</summary><div>Volumen → masa de solución: 8000 mL × 1,09 g/mL = 8720 g.<div class="f">soluto = 8720 × 15,0/100 = 1308 g = 1,31 kg</div>Si pidieran el <b>agua</b>: 8720 − 1308 = 7412 g (o 85 % de 8720).</div></details></div>
+<div class="card"><span class="tag">Ion en % m/V</span><p class="ex">Al₂(SO₄)₃ 0,150 M. <b class="q">¿% m/V del anión?</b> (ej. 4, modelo 2)</p>
+<details class="eye"><summary>Ver resolución</summary><div>1 sal → 3 SO₄²⁻: [SO₄²⁻] = 0,450 M. Masa molar SO₄²⁻ = 96,1 g/mol.<div class="f">0,450 × 96,1 = 43,2 g/L → 4,32 % m/V</div></div></details></div>
+<div class="card"><span class="tag">M → masa</span><p class="ex"><b class="q">¿Qué masa de AgNO₃</b> hace falta para 80,0 mL de solución 0,0250 M?</p>
+<details class="eye"><summary>Ver resolución</summary><div>n = 0,0250 × 0,0800 = 2,00×10⁻³ mol × 170 g/mol = 0,340 g = <b>340 mg</b></div></details></div>
+</div>
+
+<h2>3. Iones en solución (repaso de U10)</h2>
+<div class="card key"><b>[ion] = [sal] × (subíndice del ion)</b><br>MgCl₂ 0,1 M → [Mg²⁺] = 0,1 M · [Cl⁻] = 0,2 M<br>Al₂(SO₄)₃ 0,1 M → [Al³⁺] = 0,2 M · [SO₄²⁻] = 0,3 M<br>Si te dan el ion y piden la sal: <b>dividís</b> por el subíndice.</div>
+
+<h2>4. Diluciones</h2>
+<p>Diluir = agregar solvente. <b>Los moles de soluto no cambian</b>, solo se reparten en más volumen → la concentración baja.</p>
+<div class="grid">
+<div class="f big">C<sub>i</sub> · V<sub>i</sub> = C<sub>f</sub> · V<sub>f</sub></div>
+<div class="f">factor de dilución = V<sub>f</sub> / V<sub>i</sub> = C<sub>i</sub> / C<sub>f</sub></div>
+</div>
+<div class="card warn"><b>“Se agregan 500 mL de agua a 50,0 mL”</b> → V final = <b>550 mL</b> (volúmenes aditivos), no 500.<br><b>“Se diluye hasta 250 mL”</b> → V final = <b>250 mL</b>.</div>
+
+<h3>Notación “1 + 2” y “1:3”</h3>
+<p>Imaginá la dilución como un rectángulo cortado en partes iguales. <span class="leg"><i style="background:#f4a259"></i>soluto (lo que diluís) <i style="background:#cfe8fc"></i>solvente (agua)</span></p>
+
+<div class="card"><b>1 + 2</b> → el primer número son las partes de <b>soluto</b>, el segundo las partes de <b>solvente</b>. Total: 1 + 2 = 3 partes.
+<div class="dil"><div class="bar"><span class="st">1</span><span class="sv">agua</span><span class="sv">agua</span></div></div>
+La concentración queda dividida por 3 (1 parte de soluto de 3 totales).</div>
+
+<div class="card"><b>1:3</b> (se lee “1 en 3”) → el primero son partes de <b>soluto</b>, el último son las partes <b>totales</b>. 3 − 1 = 2 partes de agua.
+<div class="dil"><div class="bar"><span class="st">1</span><span class="sv">agua</span><span class="sv">agua</span></div></div>
+¡Es <b>el mismo rectángulo</b>! <b>1 + 2 = 1:3</b>.</div>
+
+<div class="grid">
+<div class="card"><b>2 + 3</b> → 2 de soluto, 3 de agua, 5 totales = <b>2:5</b>
+<div class="dil"><div class="bar"><span class="st">1</span><span class="st">2</span><span class="sv">a</span><span class="sv">a</span><span class="sv">a</span></div></div></div>
+<div class="card"><b>1 + 4</b> → 1 de soluto, 4 de agua = <b>1:5</b>
+<div class="dil"><div class="bar"><span class="st">1</span><span class="sv">a</span><span class="sv">a</span><span class="sv">a</span><span class="sv">a</span></div></div></div>
+</div>
+<div class="tw"><table>
+<tr><th>Escrito “+”</th><th>Escrito con “:”</th><th>Partes totales</th><th>Concentración final</th></tr>
+<tr><td>1 + 1</td><td>1:2</td><td>2</td><td>la mitad</td></tr>
+<tr><td>1 + 2</td><td>1:3</td><td>3</td><td>÷ 3</td></tr>
+<tr><td>1 + 4</td><td>1:5</td><td>5</td><td>÷ 5</td></tr>
+<tr><td>1 + 9</td><td>1:10</td><td>10</td><td>÷ 10</td></tr>
+<tr><td>2 + 3</td><td>2:5</td><td>5</td><td>× 2/5</td></tr>
+</table></div>
+<div class="grid">
+<div class="card"><span class="tag">Preparar</span><p class="ex"><b class="q">¿Cómo preparo 300 mL</b> de una dilución 1 + 2?</p>
+<details class="eye"><summary>Ver resolución</summary><div>Partes totales: 3. Cada parte: 300 / 3 = 100 mL.<br>→ <b>100 mL</b> de solución concentrada + <b>200 mL</b> de agua.</div></details></div>
+<div class="card"><span class="tag">Preparar</span><p class="ex"><b class="q">¿Cómo preparo 200 mL</b> de una dilución 1:4? ¿Y la concentración si partí de 0,8 M?</p>
+<details class="eye"><summary>Ver resolución</summary><div>4 partes totales: 200 / 4 = 50 mL cada una → <b>50 mL</b> de concentrada + <b>150 mL</b> de agua.<br>C final = 0,8 / 4 = <b>0,2 M</b>.</div></details></div>
+</div>
+
+<h3>Así viene en el parcial (ej. 3)</h3>
+<div class="grid">
+<div class="card"><span class="tag">Modelo 1</span><p class="ex">A 50,0 mL de MgCl₂ 0,500 M se le agregan 500 mL de agua. <b class="q">¿[Cl⁻] final?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>V final = 550 mL.<div class="f">C<sub>f</sub> = 0,500 × 50,0 / 550 = 0,0455 M de MgCl₂</div>1 MgCl₂ → 2 Cl⁻ → <b>[Cl⁻] = 0,0909 M</b></div></details></div>
+<div class="card"><span class="tag">Modelo 4</span><p class="ex">15,0 mL de Al₂(SO₄)₃ se diluyen hasta 500 mL. Los aniones en la diluida: 0,0450 M. <b class="q">¿Molaridad de la concentrada?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>Primero de ion a sal: 0,0450 / 3 = 0,0150 M de sal (diluida).<div class="f">C<sub>i</sub> = 0,0150 × 500 / 15,0 = 0,500 M</div></div></details></div>
+</div>
+
+<div class="practice" data-quiz="u9"></div>
+</section>
+<section class="view" id="u11" style="--c:var(--u11)">
+<div class="hero"><h1>Unidad 11 · Cinética + Le Chatelier</h1><p>La cinética casi no aparece como ejercicio de cuenta en los modelos: va corto y conceptual. Lo que sí viene siempre es el <b>ej. 8: equilibrio y Le Chatelier</b>.</p></div>
+
+<h2>1. Velocidad de reacción</h2>
+<div class="card">Es cuánto cambia la concentración por unidad de tiempo. Unidad: <b>M/s = mol·L⁻¹·s⁻¹</b>.
+<div class="f">v media = − Δ[reactivo] / Δt = + Δ[producto] / Δt</div>
+<span class="small">El signo menos en los reactivos es porque su concentración baja; así la velocidad siempre da positiva.</span></div>
+
+<h3>Velocidad única (con la estequiometría)</h3>
+<div class="f big">a A + b B → c C + d D</div>
+<div class="f">v = −(1/a)·Δ[A]/Δt = −(1/b)·Δ[B]/Δt = (1/c)·Δ[C]/Δt = (1/d)·Δ[D]/Δt</div>
+<div class="card"><span class="tag">Ejemplo</span><p class="ex">2 N₂O₅ → 4 NO₂ + O₂. El NO₂ se forma a 0,040 M/s. <b class="q">¿Velocidad de reacción y de las otras especies?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>v = 0,040 / 4 = <b>0,010 M/s</b><br>N₂O₅ se consume a 2 × 0,010 = 0,020 M/s · O₂ se forma a 1 × 0,010 = 0,010 M/s.<br>Cuanto más grande el coeficiente, más rápido cambia esa especie.</div></details></div>
+
+<h2>2. Ley de velocidad y órdenes</h2>
+<div class="f big">v = k · [A]<sup>m</sup> · [B]<sup>n</sup></div>
+<div class="card"><b>m y n</b> son los órdenes parciales: <b>se determinan experimentalmente</b> (no son los coeficientes de la ecuación). Orden total = m + n. <b>k</b> es la constante de velocidad: depende de la temperatura (y del catalizador), no de las concentraciones.</div>
+<div class="tw"><table>
+<tr><th>Orden</th><th>Ley</th><th>Si duplico [A], v…</th><th>Unidad de k</th></tr>
+<tr><td>0</td><td>v = k</td><td>no cambia</td><td>M·s⁻¹ (mol L⁻¹ s⁻¹)</td></tr>
+<tr><td>1</td><td>v = k[A]</td><td>× 2</td><td>s⁻¹</td></tr>
+<tr><td>2</td><td>v = k[A]²</td><td>× 4</td><td>M⁻¹·s⁻¹ (L mol⁻¹ s⁻¹)</td></tr>
+<tr><td>total n</td><td></td><td>× 2ⁿ</td><td>M<sup>1−n</sup>·s⁻¹</td></tr>
+</table></div>
+<div class="slides"><div class="sh">Determinar órdenes y k con una tabla<span class="n"></span></div>
+<div class="slide"><div class="tw"><table><tr><th>Exp.</th><th>[A] (M)</th><th>[B] (M)</th><th>v (M/s)</th></tr><tr><td>1</td><td>0,10</td><td>0,10</td><td>2,0×10⁻³</td></tr><tr><td>2</td><td>0,20</td><td>0,10</td><td>8,0×10⁻³</td></tr><tr><td>3</td><td>0,10</td><td>0,20</td><td>4,0×10⁻³</td></tr></table></div><p>Regla: compará <b>dos experimentos donde cambia una sola concentración</b>.</p></div>
+<div class="slide"><p><b>Orden en A</b>: exp. 1 → 2. [B] igual, [A] × 2, v × 4.</p><p>2<sup>m</sup> = 4 → <b>m = 2</b></p></div>
+<div class="slide"><p><b>Orden en B</b>: exp. 1 → 3. [A] igual, [B] × 2, v × 2.</p><p>2<sup>n</sup> = 2 → <b>n = 1</b>. Orden total = 3.</p><div class="f">v = k [A]² [B]</div></div>
+<div class="slide"><p><b>Calcular k</b> con cualquier experimento (el 1):</p><div class="f">k = v / ([A]²[B]) = 2,0×10⁻³ / (0,10² · 0,10) = 2,0 M⁻²·s⁻¹</div></div>
+</div>
+
+<h2>3. ¿Qué hace que una reacción sea más rápida?</h2>
+<div class="card"><b>Teoría de colisiones:</b> para reaccionar, las partículas tienen que chocar con <b>suficiente energía</b> (≥ energía de activación, Ea) y con la <b>orientación correcta</b>. Eso es un choque eficaz.
+<ul style="margin:6px 0 0">
+<li><b>↑ concentración</b> → más choques → más rápida.</li>
+<li><b>↑ temperatura</b> → más choques y más energéticos → <b>siempre</b> más rápida (exo o endo).</li>
+<li><b>↑ superficie de contacto</b> (sólido en polvo) → más rápida.</li>
+<li><b>Catalizador</b> → más rápida.</li>
+</ul></div>
+
+<h3>Catalizadores y enzimas</h3>
+<svg viewBox="0 0 520 230" width="100%" style="max-width:560px;display:block;margin:10px auto;background:#fff;border:1px solid var(--line);border-radius:14px">
+<line x1="50" y1="200" x2="500" y2="200" stroke="#334" stroke-width="2"/><line x1="50" y1="200" x2="50" y2="20" stroke="#334" stroke-width="2"/>
+<text x="20" y="110" font-size="12" fill="#334" transform="rotate(-90 20 110)">Energía</text><text x="400" y="220" font-size="12" fill="#334">avance de la reacción</text>
+<path d="M60 140 H130 C190 140 200 40 260 40 C320 40 330 170 390 170 H490" fill="none" stroke="#7b4fd1" stroke-width="3"/>
+<path d="M130 140 C190 140 200 95 260 95 C320 95 330 170 390 170" fill="none" stroke="#2b9348" stroke-width="3" stroke-dasharray="7 5"/>
+<text x="70" y="132" font-size="12" font-weight="700">reactivos</text><text x="420" y="162" font-size="12" font-weight="700">productos</text>
+<line x1="260" y1="140" x2="260" y2="44" stroke="#7b4fd1" stroke-width="1.5" marker-end="url(#ar)"/><text x="266" y="70" font-size="12" fill="#7b4fd1" font-weight="700">Ea sin catalizador</text>
+<text x="266" y="112" font-size="12" fill="#2b9348" font-weight="700">Ea con catalizador</text>
+<line x1="480" y1="140" x2="480" y2="168" stroke="#d62828" stroke-width="1.5"/><text x="440" y="190" font-size="11" fill="#d62828">ΔH (igual)</text>
+<line x1="60" y1="140" x2="480" y2="140" stroke="#999" stroke-dasharray="3 4"/>
+<defs><marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8z" fill="#7b4fd1"/></marker></defs>
+</svg>
+<div class="grid">
+<div class="card"><b>Catalizador</b>
+<ul style="margin:4px 0 0;padding-left:18px">
+<li>Aumenta la velocidad <b>bajando la Ea</b> (ofrece otro camino).</li>
+<li><b>No se consume</b>: se recupera igual al final.</li>
+<li><b>No cambia ΔH</b> (ni hace exo a una endo).</li>
+<li>Acelera la ida y la vuelta por igual: <b>no desplaza el equilibrio ni cambia K</b>, solo se llega antes.</li>
+</ul></div>
+<div class="card"><b>Enzimas</b>
+<ul style="margin:4px 0 0;padding-left:18px">
+<li>Son <b>catalizadores biológicos</b>, casi todas proteínas.</li>
+<li>Muy <b>específicas</b>: el sustrato encaja en el sitio activo.</li>
+<li>Dependen de la <b>temperatura y el pH</b> (con mucho calor se desnaturalizan).</li>
+</ul></div>
+</div>
+<div class="card"><b>Exotérmica</b>: libera calor, ΔH &lt; 0 (productos más abajo). <b>Endotérmica</b>: absorbe calor, ΔH &gt; 0 (productos más arriba).</div>
+
+<h2>4. Equilibrio químico (base para el ej. 8)</h2>
+<div class="card"><b>Equilibrio dinámico:</b> la reacción sigue yendo y viniendo, pero la velocidad directa = la velocidad inversa. Las concentraciones quedan <b>constantes</b> (no iguales entre sí).</div>
+<div class="f big">a A + b B ⇌ c C + d D &nbsp;&nbsp; K<sub>c</sub> = [C]<sup>c</sup>[D]<sup>d</sup> / ([A]<sup>a</sup>[B]<sup>b</sup>)</div>
+<div class="card key">• Productos arriba, reactivos abajo, cada uno elevado a su coeficiente.<br>• <b>No</b> se ponen sólidos (s) ni líquidos puros (l), como el agua.<br>• K<sub>c</sub> solo cambia con la <b>temperatura</b>. K grande → hay más productos.<br>• Q<sub>c</sub> (mismo cálculo pero fuera del equilibrio): Q &lt; K → va hacia productos; Q &gt; K → va hacia reactivos.</div>
+<div class="card"><span class="tag">Tabla de equilibrio</span><p class="ex">2,50 mol de HBr en 100 L. 2 HBr ⇌ H₂ + Br₂, K<sub>c</sub> = 0,125. <b class="q">¿[HBr] en el equilibrio?</b> (ej. 8, modelo 1)</p>
+<details class="eye"><summary>Ver resolución</summary><div>[HBr]₀ = 2,50 / 100 = 0,0250 M.
+<div class="tw"><table><tr><th></th><th class="c">2 HBr</th><th class="c">H₂</th><th class="c">Br₂</th></tr><tr><td>Inicial</td><td class="c">0,0250</td><td class="c">0</td><td class="c">0</td></tr><tr><td>Cambio</td><td class="c">−2x</td><td class="c">+x</td><td class="c">+x</td></tr><tr><td>Equilibrio</td><td class="c">0,0250 − 2x</td><td class="c">x</td><td class="c">x</td></tr></table></div>
+<div class="f">x² / (0,0250 − 2x)² = 0,125 → raíz: x / (0,0250 − 2x) = 0,354 → x = 5,18×10⁻³</div>
+[HBr] = 0,0250 − 2(5,18×10⁻³) = <b>0,0146 M</b></div></details></div>
+
+<h2>5. ⭐ Principio de Le Chatelier</h2>
+<div class="card tip">Si a un sistema en equilibrio le hacés un cambio, el sistema <b>se desplaza para contrarrestar ese cambio</b>. Si agregás algo, lo gasta; si sacás algo, lo repone.</div>
+<div class="card key"><b>Truco del calor:</b> escribí el calor como si fuera una sustancia más.<br><b>Exotérmica</b>: A ⇌ B + <b>calor</b> (el calor es “producto”).<br><b>Endotérmica</b>: A + <b>calor</b> ⇌ B (el calor es “reactivo”).<br>Subir T = agregar calor → el sistema lo gasta.</div>
+<div class="tw"><table>
+<tr><th>Perturbación</th><th>Hacia dónde se desplaza</th></tr>
+<tr><td>Agrego un <b>reactivo</b></td><td class="up">→ productos</td></tr>
+<tr><td>Saco un <b>reactivo</b></td><td class="dn">← reactivos</td></tr>
+<tr><td>Agrego un <b>producto</b></td><td class="dn">← reactivos</td></tr>
+<tr><td>Saco (extraigo) un <b>producto</b></td><td class="up">→ productos</td></tr>
+<tr><td><b>↑ T</b> en una <b>exotérmica</b></td><td class="dn">← reactivos (y K baja)</td></tr>
+<tr><td><b>↓ T</b> en una <b>exotérmica</b></td><td class="up">→ productos (y K sube)</td></tr>
+<tr><td><b>↑ T</b> en una <b>endotérmica</b></td><td class="up">→ productos (y K sube)</td></tr>
+<tr><td><b>↓ T</b> en una <b>endotérmica</b></td><td class="dn">← reactivos (y K baja)</td></tr>
+<tr><td><b>↑ P</b> (achico el volumen)</td><td>hacia el lado con <b>menos moles de gas</b></td></tr>
+<tr><td><b>↓ P</b> (agrando el volumen)</td><td>hacia el lado con <b>más moles de gas</b></td></tr>
+<tr><td>Igual moles de gas de los dos lados y cambio P</td><td>no se desplaza</td></tr>
+<tr><td>Agrego un <b>catalizador</b></td><td>no se desplaza (llega antes)</td></tr>
+<tr><td>Agrego un sólido o líquido puro</td><td>no se desplaza</td></tr>
+</table></div>
+<div class="slides"><div class="sh">Así viene el ej. 8<span class="n"></span></div>
+<div class="slide"><div class="f">N₂ (g) + 3 H₂ (g) ⇌ 2 NH₃ (g) &nbsp; exotérmica</div><p>“¿Qué perturbación hace que evolucione hacia <b>productos</b>?”</p><p>Escribo: N₂ + 3 H₂ ⇌ 2 NH₃ + <b>calor</b>.</p></div>
+<div class="slide"><p>a) <b>Aumentar T</b> → agrego calor (producto) → lo gasta → <span class="dn">← reactivos</span> ✗</p><p>b) <b>Agregar NH₃</b> → agrego producto → <span class="dn">← reactivos</span> ✗</p><p>c) <b>Disminuir T</b> → saco calor → lo repone → <span class="up">→ productos</span> ✔</p><p>d) <b>Extraer N₂</b> → saco reactivo → <span class="dn">← reactivos</span> ✗</p></div>
+<div class="slide"><p>También funcionarían: <b>aumentar la presión</b> (izquierda 4 moles de gas, derecha 2) o <b>retirar NH₃</b>.</p></div>
+<div class="slide"><div class="f">CO (g) + H₂O (g) ⇌ CO₂ (g) + H₂ (g) &nbsp; exotérmica</div><p>“Si se aumenta T, ¿qué pasa con CO y H₂O?” → ↑T en exotérmica → <span class="dn">← reactivos</span> → <b>CO y H₂O aumentan</b> (y CO₂ y H₂ disminuyen).</p><p class="small">Acá cambiar P no haría nada: 2 moles de gas de cada lado.</p></div>
+</div>
+
+<div class="practice" data-quiz="u11"></div>
+</section>
+<section class="view" id="u13" style="--c:var(--u13)">
+<div class="hero"><h1>Unidad 13 · Ácidos y bases</h1><p>Ejercicios 9 y 10. Primero: ¿es fuerte o débil? Eso decide toda la cuenta.</p></div>
+
+<h2>1. ¿Qué es un ácido y qué es una base? (Brønsted-Lowry)</h2>
+<div class="grid">
+<div class="card"><b>Ácido</b>: <b>dona</b> un H⁺ (protón).</div>
+<div class="card"><b>Base</b>: <b>acepta</b> un H⁺.</div>
+</div>
+<div class="f">HA + H₂O ⇌ A⁻ + H₃O⁺ &nbsp;&nbsp;|&nbsp;&nbsp; B + H₂O ⇌ BH⁺ + OH⁻</div>
+<div class="card"><b>Pares conjugados:</b> cuando un ácido pierde su H⁺ queda su <b>base conjugada</b> (HF → F⁻, CH₃COOH → CH₃COO⁻). Cuando una base gana un H⁺ queda su <b>ácido conjugado</b> (NH₃ → NH₄⁺).</div>
+<div class="card tip"><b>El agua es anfótera:</b> puede ser ácido o base según con quién esté.<br>Con HCl actúa como <b>base</b> (acepta H⁺): HCl + H₂O → Cl⁻ + H₃O⁺<br>Con NH₃ actúa como <b>ácido</b> (dona H⁺): NH₃ + H₂O ⇌ NH₄⁺ + OH⁻<br>Y consigo misma (autoionización): 2 H₂O ⇌ H₃O⁺ + OH⁻ → <b>K<sub>w</sub> = [H₃O⁺]·[OH⁻] = 1,00×10⁻¹⁴</b> (25 °C)</div>
+
+<h2>2. ⭐ Fuertes y débiles</h2>
+<div class="grid">
+<div class="card"><b>Fuerte</b>: se ioniza <b>totalmente</b> (100 %). Flecha <b>→</b>. <b>No tiene Ka</b>.<br>[H₃O⁺] = concentración del ácido.</div>
+<div class="card"><b>Débil</b>: se ioniza <b>poquito</b>. Flecha <b>⇌</b>. <b>Tiene Ka (o Kb)</b>.<br>Hay que hacer la tabla con x.</div>
+</div>
+<div class="card key"><b>Si el enunciado te da Ka, Kb o pKa → es DÉBIL.</b> Nadie te da la Ka de un ácido fuerte.</div>
+<div class="tw"><table>
+<tr><th>Ácidos fuertes</th><th>Bases fuertes</th></tr>
+<tr><td>HCl · HBr · HI · HNO₃ · H₂SO₄ · HClO₄</td><td>NaOH · KOH · LiOH · Ca(OH)₂ · Ba(OH)₂<br><span class="small">(hidróxidos de metales de los grupos 1 y 2)</span></td></tr>
+<tr><th>Ácidos débiles</th><th>Bases débiles</th></tr>
+<tr><td><b>HF</b> (¡ojo, es débil!) · ácido acético CH₃COOH · fórmico HCOOH · hipocloroso HClO · HCN · HNO₂ · ácidos “-acéticos” (cloro-, bromo-, iodoacético) · arsenioso · benzoico · NH₄⁺</td><td><b>NH₃</b> (amoníaco) · aminas: metilamina CH₃NH₂, etilamina… · piridina · anilina · bases conjugadas de ácidos débiles (F⁻, CH₃COO⁻)</td></tr>
+</table></div>
+<div class="card warn">Ca(OH)₂ y Ba(OH)₂ liberan <b>2 OH⁻</b> por fórmula: Ca(OH)₂ 0,010 M → [OH⁻] = 0,020 M. (Lo mismo que las sales de U10.)</div>
+
+<h3>Ka, Kb y pKa</h3>
+<div class="grid">
+<div class="f">K<sub>a</sub> = [A⁻]·[H₃O⁺] / [HA]</div>
+<div class="f">K<sub>b</sub> = [BH⁺]·[OH⁻] / [B]</div>
+<div class="f">pK<sub>a</sub> = −log K<sub>a</sub></div>
+<div class="f">K<sub>a</sub> · K<sub>b</sub> = K<sub>w</sub> (par conjugado)</div>
+</div>
+<div class="card tip">El agua no va en la expresión (es líquido puro).<br><b>Más Ka = menos pKa = ácido más fuerte</b> → a igual concentración da más H₃O⁺, menor pH y mayor grado de disociación.<br><span class="small">Ej. 9 del modelo 3: ordenar de menor a mayor disociación → HClO (pKa 7,53) &lt; acético (4,75) &lt; HF (Ka 6,8×10⁻⁴ → pKa 3,17) &lt; HCl (fuerte).</span></div>
+
+<h2>3. Escala de pH y los pasajes</h2>
+<div class="tw"><table>
+<tr><th class="c">[H₃O⁺]</th><th class="c">⇄</th><th class="c">pH</th></tr>
+<tr><td class="c">[H₃O⁺] = 10<sup>−pH</sup></td><td class="c"></td><td class="c">pH = −log [H₃O⁺]</td></tr>
+<tr><td class="c">↕ [H₃O⁺]·[OH⁻] = 10⁻¹⁴</td><td></td><td class="c">↕ pH + pOH = 14</td></tr>
+<tr><td class="c">[OH⁻] = 10<sup>−pOH</sup></td><td class="c"></td><td class="c">pOH = −log [OH⁻]</td></tr>
+<tr><th class="c">[OH⁻]</th><th class="c">⇄</th><th class="c">pOH</th></tr>
+</table></div>
+<div class="grid">
+<div class="card"><b>pH &lt; 7</b> ácida · <b>pH = 7</b> neutra ([H₃O⁺] = [OH⁻] = 10⁻⁷ M) · <b>pH &gt; 7</b> básica (a 25 °C).</div>
+<div class="card">Bajar el pH <b>1 unidad</b> = <b>10 veces</b> más H₃O⁺. Bajar 2 unidades = 100 veces.</div>
+</div>
+<div class="card"><span class="tag">Pasajes</span><p class="ex"><b class="q">Completá:</b> (a) [H₃O⁺] = 1×10⁻³ M → pH? (b) pH = 2,15 → [H₃O⁺]? (c) pOH = 4,00 → pH? (d) [OH⁻] = 1,33×10⁻³ → pOH?</p>
+<details class="eye"><summary>Ver resolución</summary><div>(a) pH = 3,00 · (b) [H₃O⁺] = 10<sup>−2,15</sup> = 7,08×10⁻³ M · (c) pH = 14 − 4 = 10,00 · (d) pOH = −log(1,33×10⁻³) = 2,88<br><span class="small">En la calculadora: “−log” es la tecla log con el menos adelante; 10<sup>−pH</sup> es shift + log.</span></div></details></div>
+
+<h2>4. La tabla con la x (débiles)</h2>
+<div class="tw"><table>
+<tr><th></th><th class="c">HA</th><th class="c">+ H₂O ⇌</th><th class="c">A⁻</th><th class="c">H₃O⁺</th></tr>
+<tr><td>Inicial</td><td class="c">C</td><td></td><td class="c">0</td><td class="c">0</td></tr>
+<tr><td>Cambio</td><td class="c">−x</td><td></td><td class="c">+x</td><td class="c">+x</td></tr>
+<tr><td>Equilibrio</td><td class="c">C − x</td><td></td><td class="c">x</td><td class="c">x</td></tr>
+</table></div>
+<div class="f big">K<sub>a</sub> = x² / (C − x)</div>
+<div class="card key"><b>x = [H₃O⁺] = [A⁻]</b> (para una base, x = [OH⁻] = [BH⁺]).<br><b>¿Puedo tachar la x de abajo?</b> Solo si C / Ka es muy grande (más de 1000): x ≈ √(Ka · C). Si no, hacé la cuadrática:
+<div class="f">x = ( −Ka + √(Ka² + 4·Ka·C) ) / 2</div>
+<span class="small">En el modelo 1 la clave no aceptaba la aproximación con C/Ka ≈ 110. Ante la duda, cuadrática.</span></div>
+<div class="grid">
+<div class="card"><b>Grado de ionización</b><div class="f">α = x / C</div></div>
+<div class="card"><b>Porcentaje de ionización</b><div class="f">% = α × 100</div><span class="small">Fuerte: α = 1 (100 %). Débil: α &lt; 1.</span></div>
+</div>
+<div class="card warn"><b>Leé bien si el dato es inicial o de equilibrio.</b> Si dice “la concentración del ácido <b>en el equilibrio</b> es…”, eso ya es C − x: no restes nada (ej. 10, modelo 4).</div>
+
+<h2>5. Los seis casos tipo</h2>
+<h3>Ácidos</h3>
+<div class="grid">
+<div class="card"><span class="tag">Fuerte · pH</span><p class="ex">HNO₃ 0,0050 M. <b class="q">¿pH?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>Fuerte → se ioniza todo: [H₃O⁺] = 0,0050 M.<div class="f">pH = −log 0,0050 = 2,30</div>Sin tabla, sin Ka.</div></details></div>
+<div class="card"><span class="tag">Débil A · pH</span><p class="ex">Ácido cloroacético 0,0150 M, Ka = 1,36×10⁻⁴. <b class="q">¿[H₃O⁺] y pH?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>Tiene Ka → débil → tabla. C/Ka = 110 → cuadrática.<div class="f">x² + 1,36×10⁻⁴ x − 2,04×10⁻⁶ = 0 → x = 1,36×10⁻³ M</div>pH = −log(1,36×10⁻³) = <b>2,87</b> · α = 1,36×10⁻³/0,0150 = 9,1 %</div></details></div>
+<div class="card"><span class="tag">Débil B · Ka</span><p class="ex">Ácido bromoacético 0,0472 M con pH = 2,15. <b class="q">¿Ka?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>x = [H₃O⁺] = 10<sup>−2,15</sup> = 7,08×10⁻³ M = [A⁻]. [HA] = 0,0472 − 0,00708 = 0,0401 M.<div class="f">Ka = (7,08×10⁻³)² / 0,0401 = 1,25×10⁻³</div>Si no restás la x da 1,06×10⁻³ (mal).</div></details></div>
+</div>
+<h3>Bases</h3>
+<div class="grid">
+<div class="card"><span class="tag">Fuerte · pH</span><p class="ex">NaOH 0,020 M. <b class="q">¿pH?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>[OH⁻] = 0,020 M → pOH = −log 0,020 = 1,70<div class="f">pH = 14 − 1,70 = 12,30</div>Con las bases primero sale el <b>pOH</b>.</div></details></div>
+<div class="card"><span class="tag">Débil A · pH</span><p class="ex">NH₃ 0,100 M, Kb = 1,8×10⁻⁵. <b class="q">¿pH?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>NH₃ + H₂O ⇌ NH₄⁺ + OH⁻. Kb = x²/(0,100 − x). C/Kb ≈ 5500 → se puede aproximar.<div class="f">x = √(1,8×10⁻⁵ · 0,100) = 1,34×10⁻³ M = [OH⁻]</div>pOH = 2,87 → <b>pH = 11,13</b></div></details></div>
+<div class="card"><span class="tag">Débil B · Kb</span><p class="ex">NH₃ 0,100 M con [OH⁻] = 1,33×10⁻³ M. <b class="q">¿Kb y α?</b></p>
+<details class="eye"><summary>Ver resolución</summary><div>x = 1,33×10⁻³. [NH₃] eq = 0,100 − 0,00133 = 0,0987 M.<div class="f">Kb = (1,33×10⁻³)² / 0,0987 = 1,79×10⁻⁵</div>α = 1,33×10⁻³ / 0,100 = 0,0133 → 1,33 %</div></details></div>
+</div>
+<div class="card tip"><b>Ej. 9 del modelo 1:</b> “¿cuál se preparó con una base débil?” → la NH₃ (te da C y [OH⁻] distintos: [OH⁻] mucho menor que C, se ionizó poco). La NaOH es fuerte; HNO₃ y bromoacético son ácidos.</div>
+
+<div class="practice" data-quiz="u13"></div>
+</section>
+<section class="view" id="panel" style="--c:#333">
+<div class="hero" style="background:#2d3142"><h1>📊 Panel de control</h1><p>Cómo vas en cada unidad. Desde acá podés practicar <b>solo las falladas</b>, todo mezclado, o borrar el progreso.</p></div>
+<div class="card"><div class="stat" id="pTotal"></div></div>
+<div class="modes" style="--c:#2d3142">
+  <button class="btn fill" data-pm="fail">🔁 Practicar todas las falladas</button>
+  <button class="btn" data-pm="new">🆕 Todas las sin responder</button>
+  <button class="btn" data-pm="mix">🎲 Mezcla de todo (20 al azar)</button>
+</div>
+<div class="grid" id="pUnits"></div>
+<div class="practice" id="pQuiz" data-quiz="panel" style="--c:#2d3142" hidden></div>
+<div class="card small" style="margin-top:24px">El progreso se guarda en este navegador. <button class="btn" id="reset" style="--c:var(--bad);margin-left:6px">Borrar progreso</button> <span id="resetMsg"></span></div>
+</section>
+</main>
+<script>
+const BANK={u8:[],u10:[],u9:[],u11:[],u13:[],id:[]};
+function Q(u,q,o,e){BANK[u].push({id:u+"-"+(BANK[u].length+1),u,q,o,e})}
+
+/* ===== U8 GASES ===== */
+Q("u8","Según la teoría cinética, la energía cinética media de las moléculas de un gas es…",["Directamente proporcional a la temperatura absoluta (K)","Directamente proporcional a la presión","Independiente de la temperatura","Inversamente proporcional a la temperatura"],"Más temperatura (en K) → las partículas se mueven más rápido → más energía cinética.");
+Q("u8","La presión que ejerce un gas se debe a…",["Los choques de las partículas contra las paredes del recipiente","La atracción entre las partículas","El peso de las partículas","El volumen propio de las partículas"],"La presión es el efecto de los choques contra las paredes.");
+Q("u8","En un gas ideal se considera que las partículas…",["No interactúan entre sí y su volumen propio es despreciable","Se atraen fuertemente","Ocupan casi todo el recipiente con su tamaño","Están quietas a temperatura ambiente"],"Son los supuestos de la teoría cinética: sin interacciones, volumen propio despreciable, movimiento continuo.");
+Q("u8","Si la temperatura y los moles no cambian (Boyle; el nombre no importa), la presión y el volumen son…",["Inversamente proporcionales (P₁V₁ = P₂V₂)","Directamente proporcionales","Independientes","Iguales"],"Si el volumen se achica a la mitad, la presión se duplica.");
+Q("u8","Si la presión y los moles no cambian (Charles; el nombre no importa), ¿qué cociente se mantiene constante?",["V / T","P · V","P / T","V · T"],"V₁/T₁ = V₂/T₂: si sube T, sube V (por ejemplo, con tapa móvil).");
+Q("u8","En un recipiente rígido y cerrado, si aumenta la temperatura, la presión…",["Aumenta (P/T se mantiene constante)","Disminuye","No cambia","Se hace cero"],"Rígido = V constante → P₁/T₁ = P₂/T₂ (es la de Gay-Lussac, pero el nombre no importa).");
+Q("u8","A igual P y T, volúmenes iguales de gases distintos tienen… (Avogadro; el nombre no importa)",["El mismo número de moles","La misma masa","La misma densidad","La misma masa molar"],"V/n es constante a P y T fijas, sin importar qué gas sea.");
+Q("u8","En las leyes de los gases la temperatura se usa siempre en…",["Kelvin","Grados Celsius","Grados Fahrenheit","Cualquier unidad"],"T(K) = t(°C) + 273. En °C las proporciones dan mal.");
+Q("u8","¿Cuántos mmHg son 1 atm?",["760 mmHg","1000 mmHg","101,3 mmHg","76 mmHg"],"1 atm = 760 mmHg = 101,3 kPa.");
+Q("u8","1 dm³ equivale a…",["1 L","1 mL","1 m³","10 L"],"dm³ y litro son lo mismo. 1 m³ = 1000 L.");
+Q("u8","¿Qué son las CNPT?",["0 °C (273 K) y 1 atm","25 °C y 1 atm","0 K y 0 atm","100 °C y 1 atm"],"Condiciones normales de presión y temperatura.");
+Q("u8","En CNPT, 1 mol de cualquier gas ocupa…",["22,4 L","1 L","24,5 L","Depende de la masa molar del gas"],"Para un gas ideal no importa cuál sea: 22,4 L en CNPT.");
+Q("u8","Si usás R = 0,0821, las unidades de PV = nRT tienen que ser…",["atm, L, mol y K","mmHg, mL, g y °C","atm, mL, g y K","kPa, m³, mol y °C"],"R = 0,0821 atm·L/(K·mol).");
+Q("u8","A igual presión y temperatura, ¿qué gas es más denso?",["El de mayor masa molar","El de menor masa molar","Todos tienen la misma densidad","El que está en mayor volumen"],"δ = P·M/(R·T): a igual P y T, la densidad crece con M.");
+Q("u8","Un gas está en un recipiente con tapa móvil (P constante). Si aumenta T, la densidad…",["Disminuye, porque el volumen aumenta con la misma masa","Aumenta","No cambia","Se duplica siempre"],"Charles: V sube. δ = m/V con la misma m → baja.");
+Q("u8","Un gas está en un recipiente rígido cerrado. Si aumenta T, la densidad…",["No cambia: la masa y el volumen son los mismos","Aumenta","Disminuye","Depende del gas"],"δ = m/V y ninguna de las dos cambia (lo que sube es la presión).");
+Q("u8","Dos recipientes de igual V y T: uno con 1 mol de O₂ y otro con 1 mol de H₂. La presión es…",["Igual en los dos","Mayor en el de O₂","Mayor en el de H₂","Imposible de comparar"],"P = nRT/V: mismos n, R, T y V → misma P. No depende de qué gas sea.");
+Q("u8","En el mismo caso (1 mol O₂ vs 1 mol H₂, igual V y T), la densidad es…",["Mayor en el de O₂","Igual en los dos","Mayor en el de H₂","Cero en los dos"],"Mismo V, pero 1 mol de O₂ pesa 32 g y 1 mol de H₂ pesa 2 g.");
+Q("u8","En una mezcla de gases, la presión total es… (Dalton; el nombre no importa)",["La suma de las presiones parciales","El promedio de las presiones parciales","La presión del gas que está en mayor cantidad","El producto de las presiones parciales"],"P total = P_A + P_B + …");
+Q("u8","La presión parcial de un gas en una mezcla es…",["La presión que ejercería si ocupara solo todo el recipiente a la misma T","La presión total de la mezcla","La presión del gas puro a 1 atm","Siempre la mitad de la total"],"Cada gas se comporta como si estuviera solo.");
+Q("u8","La fracción molar de un gas A en una mezcla es…",["n_A / n_total, sin unidades","n_A · n_total, en mol","n_A / V, en mol/L","masa de A / masa total"],"Es un cociente de moles: no tiene unidad y va entre 0 y 1.");
+Q("u8","La suma de todas las fracciones molares de una mezcla da…",["1","100","Depende de cuántos gases haya","0"],"Si las pasás a porcentaje suman 100 %, pero las fracciones suman 1.");
+Q("u8","¿Cómo se relaciona la presión parcial con la presión total?",["P_A = x_A · P_total","P_A = P_total / x_A","P_A = x_A + P_total","P_A = n_A · P_total"],"La presión parcial es la fracción molar por la presión total.");
+Q("u8","A un recipiente rígido con O₂ se le agrega Ar a T constante. La presión parcial del O₂…",["No cambia","Aumenta","Disminuye","Se hace cero"],"Los moles de O₂, el V y la T no cambiaron. Lo que sube es la presión total.");
+Q("u8","De un recipiente rígido con N₂ y O₂ se extrae todo el O₂ a T constante. La presión final es…",["La presión parcial que tenía el N₂","La presión total inicial","Cero","La presión parcial del O₂"],"Queda solo el N₂, con sus mismos moles, V y T.");
+
+/* ===== U10 REACCIONES ===== */
+Q("u10","En una ecuación balanceada, los coeficientes estequiométricos indican…",["La proporción en moles entre las sustancias","La masa en gramos de cada sustancia","Cuántos átomos tiene cada molécula","El estado de agregación"],"Por eso la fila de “moles teóricos” de la tablita sale de los coeficientes.");
+Q("u10","Para balancear una ecuación se pueden modificar…",["Solo los coeficientes","Solo los subíndices","Coeficientes y subíndices","Las cargas de los iones"],"Si cambiás un subíndice cambiás la sustancia (H₂O ≠ H₂O₂).");
+Q("u10","¿Qué significa (ac) o (aq) en una ecuación?",["Que la sustancia está disuelta en agua","Que es un ácido","Que es un gas","Que es un líquido puro"],"Acuoso. (s) sólido, (l) líquido, (g) gas.");
+Q("u10","La flecha simple → en una ecuación indica que…",["La reacción ocurre en forma completa","La reacción está en equilibrio","La reacción no ocurre","La reacción es endotérmica"],"La doble flecha ⇌ es la de equilibrio.");
+Q("u10","Una reacción es redox cuando…",["Algún elemento cambia su número de oxidación","Se forma agua","Participa un ácido","Se libera un gas"],"Hay que comparar los N.O. de cada elemento a los dos lados.");
+Q("u10","El número de oxidación de un elemento sin combinar (Al(s), Cl₂, O₂) es…",["0","+1","−1","Depende del elemento"],"Todo elemento solo, en estado libre, tiene N.O. 0.");
+Q("u10","El agente oxidante es la especie que…",["Se reduce: gana electrones y su N.O. baja","Se oxida: pierde electrones","No cambia su N.O.","Acelera la reacción"],"“El oxidante se reduce”.");
+Q("u10","El agente reductor es la especie que…",["Se oxida: pierde electrones y su N.O. sube","Se reduce: gana electrones","Es el producto de la reacción","Siempre es el oxígeno"],"“El reductor se oxida”.");
+Q("u10","En MnO₂ + 4 HCl → MnCl₂ + Cl₂ + 2 H₂O, el agente oxidante es…",["MnO₂","HCl","Cl₂","H₂O"],"Mn pasa de +4 a +2: se reduce → es el oxidante.");
+Q("u10","En Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂, el agente reductor es…",["CO","Fe₂O₃","Fe","CO₂"],"C pasa de +2 (CO) a +4 (CO₂): se oxida → es el reductor.");
+Q("u10","La reacción CaCO₃ → CaO + CO₂ es…",["No redox: ningún elemento cambia su N.O.","Redox, porque se libera un gas","Redox, porque cambia el carbono","Una neutralización"],"Ca +2, C +4 y O −2 en los dos lados.");
+Q("u10","Al balancear una ecuación redox iónica, además de los átomos hay que igualar…",["La carga total (electrones perdidos = ganados)","El número de moléculas de cada lado","La masa molar de cada lado","Los estados de agregación"],"Ej: Al + Cu²⁺ parece balanceada en átomos, pero las cargas no dan. Queda 2 Al + 3 Cu²⁺.");
+Q("u10","Al disolver 1 mol de Al₂(SO₄)₃ en agua se obtienen…",["2 mol de Al³⁺ y 3 mol de SO₄²⁻","1 mol de Al³⁺ y 1 mol de SO₄²⁻","2 mol de Al³⁺, 3 mol de S y 12 mol de O","3 mol de Al³⁺ y 2 mol de SO₄²⁻"],"Los subíndices dicen cuántos iones da cada fórmula.");
+Q("u10","En una solución de MgCl₂, la concentración de Cl⁻ es…",["El doble que la de la sal","Igual a la de la sal","La mitad que la de la sal","El triple que la de la sal"],"MgCl₂ → Mg²⁺ + 2 Cl⁻.");
+Q("u10","Cuando se disuelve una sal con iones como SO₄²⁻ o NO₃⁻, esos iones…",["Quedan enteros, no se separan en átomos","Se separan en S y O","Se convierten en gas","Precipitan siempre"],"Los iones poliatómicos viajan juntos.");
+Q("u10","El reactivo limitante es el que…",["Se consume por completo y determina cuánto producto se forma","Está en mayor masa","Está en mayor cantidad de moles","Sobra al final de la reacción"],"No se decide por la masa: hay que comparar con la estequiometría.");
+Q("u10","El reactivo en exceso es el que…",["Queda en parte sin reaccionar","Se consume completamente","No participa de la reacción","Actúa como catalizador"],"Sobra = tengo − reacciona.");
+Q("u10","Para saber cuál es el reactivo limitante hay que comparar…",["Los moles que tengo con los moles que necesito según la ecuación","Las masas en gramos de los reactivos","Las masas molares","Los volúmenes"],"Es la fila “necesito” de la tablita.");
+Q("u10","En la tablita de estequiometría, la fila de “moles teóricos” sale de…",["Los coeficientes estequiométricos","Los datos del enunciado","Las masas molares","El rendimiento"],"Después vienen tengo, necesito, reaccionan y sobran/se forman.");
+Q("u10","Un rendimiento del 75 % significa que…",["Se obtuvo el 75 % del producto que se esperaba teóricamente","La muestra tiene 75 % de pureza","Reaccionó el 75 % del reactivo en exceso","Sobró el 75 % del limitante"],"real = teórico × 75/100.");
+Q("u10","La pureza de una muestra indica…",["Qué porcentaje de la masa de la muestra es la sustancia que reacciona","Qué porcentaje del producto se obtuvo","El porcentaje de agua de la muestra","Lo mismo que el rendimiento"],"Ej: 80 % de pureza → de 100 g, 80 g son la sustancia.");
+Q("u10","Las impurezas “inertes” de una muestra…",["No reaccionan","Reaccionan igual que la sustancia","Actúan como catalizador","Siempre producen un gas"],"Por eso se descuentan antes de pasar a moles.");
+Q("u10","¿En qué momento de la cuenta se usa la pureza?",["Al principio, sobre el reactivo, antes de pasar a moles","Al final, sobre el producto","Nunca, se ignora","Para calcular la masa molar"],"La pureza va con el reactivo; el rendimiento, con el producto.");
+Q("u10","La masa molar se expresa en…",["g/mol","mol/g","mol/L","g"],"n = masa / masa molar.");
+Q("u10","En toda reacción química se conserva…",["La masa total (no necesariamente los moles)","El número total de moles","El volumen total","El número de moléculas"],"Ej: 2 Al + 3 Cu²⁺: 5 moles a la izquierda, 5 a la derecha por casualidad; pero en N₂ + 3 H₂ → 2 NH₃ hay 4 y 2. La masa sí se conserva siempre.");
+
+/* ===== U9 SOLUCIONES ===== */
+Q("u9","Una solución es…",["Una mezcla homogénea de soluto y solvente","Una mezcla heterogénea","Una sustancia pura","Un compuesto químico"],"Homogénea: se ve una sola fase.");
+Q("u9","El solvente es…",["El componente en mayor proporción (en soluciones acuosas, el agua)","El componente en menor proporción","Lo que se disuelve","Siempre un sólido"],"El soluto es lo que se disuelve.");
+Q("u9","La masa de una solución es igual a…",["masa de soluto + masa de solvente","masa de soluto − masa de solvente","masa de soluto × densidad","solo la masa del solvente"],"Los volúmenes no siempre se suman exacto, las masas sí.");
+Q("u9","La densidad de la solución sirve para…",["Pasar de volumen de solución a masa de solución","Calcular la cantidad de moles directamente","Expresar la concentración","Pasar de masa de soluto a masa de solvente"],"δ = masa sc / V sc. Es el puente entre mL y g.");
+Q("u9","Una solución 15 % m/m tiene…",["15 g de soluto en 100 g de solución","15 g de soluto en 100 g de solvente","15 g de soluto en 100 mL de solución","15 mol de soluto en 100 g de solución"],"m/m = masa de soluto / masa de solución. En 100 g de solución hay 85 g de agua.");
+Q("u9","Una solución 5 % m/V tiene…",["5 g de soluto en 100 mL de solución","5 g de soluto en 100 g de solución","5 g de soluto en 100 mL de solvente","5 mL de soluto en 100 mL de solución"],"m/V: gramos por cada 100 mL de solución.");
+Q("u9","Un vino de 12 % V/V tiene…",["12 mL de alcohol en 100 mL de solución","12 g de alcohol en 100 mL","12 mL de alcohol en 100 mL de agua","12 g de alcohol en 100 g"],"V/V: mL de soluto cada 100 mL de solución.");
+Q("u9","La molaridad (M) indica…",["Moles de soluto por litro de solución","Moles de soluto por kilogramo de solvente","Moles de soluto por litro de solvente","Gramos de soluto por litro de solución"],"M = n soluto / V solución (L).");
+Q("u9","La molalidad (m) indica…",["Moles de soluto por kilogramo de solvente","Moles de soluto por litro de solución","Moles de soluto por kilogramo de solución","Gramos de soluto por kilogramo de solvente"],"Es la única que va por masa de solvente.");
+Q("u9","La fracción molar del soluto es…",["n soluto / (n soluto + n solvente)","n soluto / n solvente","masa soluto / masa solución","n soluto / volumen de solución"],"Moles sobre moles totales: sin unidad.");
+Q("u9","Una concentración de 5 ppm significa aproximadamente…",["5 mg de soluto por litro de solución","5 g de soluto por litro","5 mol por millón de litros","5 mL de soluto por litro"],"ppm = partes por millón: mg/L o mg/kg.");
+Q("u9","¿Cuál de estas unidades NO cambia con la temperatura?",["Molalidad","Molaridad","% m/V","g/L"],"Usa solo masas. Las que tienen volumen cambian porque el volumen se dilata.");
+Q("u9","Para pasar de % m/V a molaridad necesitás…",["La masa molar del soluto","La densidad de la solución","La masa del solvente","Nada más"],"% m/V × 10 = g/L, y g/L ÷ masa molar = M.");
+Q("u9","Para pasar de % m/m a molaridad necesitás…",["La masa molar del soluto y la densidad de la solución","Solo la masa molar","Solo la densidad","La constante R"],"% m/m es por gramos de solución; M es por litros de solución. La densidad hace el pasaje.");
+Q("u9","Al diluir una solución, ¿qué NO cambia?",["La cantidad (moles) de soluto","La concentración","El volumen","La masa de solución"],"Solo agregás solvente: el soluto que había sigue ahí.");
+Q("u9","Al diluir una solución, la concentración…",["Disminuye","Aumenta","No cambia","Depende del soluto"],"Mismo soluto en más volumen.");
+Q("u9","La fórmula Ci · Vi = Cf · Vf vale porque…",["Los moles de soluto se conservan","El volumen se conserva","La masa de solvente se conserva","La densidad se conserva"],"C·V = moles de soluto, antes y después.");
+Q("u9","A 50 mL de solución se le agregan 500 mL de agua (volúmenes aditivos). El volumen final es…",["550 mL","500 mL","450 mL","50 mL"],"Error muy típico: “se agregan” → se suman.");
+Q("u9","Una dilución “1 + 2” significa…",["1 parte de soluto (lo que diluís) + 2 partes de solvente: 3 partes totales","1 parte de soluto en 2 partes totales","2 partes de soluto y 1 de solvente","12 partes en total"],"El primero es soluto, el segundo solvente. Se suman para el total.");
+Q("u9","Una dilución “1:4” significa…",["1 parte de soluto en 4 partes totales (1 + 3 de solvente)","1 parte de soluto + 4 de solvente","4 partes de soluto y 1 de solvente","1 parte de agua en 4 de soluto"],"En la notación con dos puntos (1:4), el último número son las partes totales.");
+Q("u9","La dilución “1 + 4” es lo mismo que…",["1:5","1:4","1:3","4:1"],"1 de soluto + 4 de solvente = 5 partes totales.");
+Q("u9","Si hacés una dilución 1:10, la concentración final es…",["La décima parte de la inicial","10 veces mayor","La novena parte","Igual"],"Cf = Ci × 1/10.");
+Q("u9","El factor de dilución es…",["Vf / Vi (= Ci / Cf)","Vi / Vf","Ci · Cf","Vf − Vi"],"Si el factor es 5, la concentración se divide por 5.");
+Q("u9","En una solución de Na₂SO₄ 0,2 M, la concentración de Na⁺ es…",["El doble que la de la sal","Igual a la de la sal","La mitad","Cuatro veces mayor"],"Na₂SO₄ → 2 Na⁺ + SO₄²⁻.");
+Q("u9","Un electrolito fuerte, como el NaCl en agua…",["Se disocia completamente en iones","No se disocia","Se disocia muy poco","Forma un gas"],"Por eso la concentración de cada ion sale directo de los subíndices.");
+
+/* ===== U11 CINÉTICA + LE CHATELIER ===== */
+Q("u11","La velocidad de una reacción es…",["La variación de la concentración por unidad de tiempo","La cantidad total de producto formado","El tiempo que tarda la reacción","La energía que se libera"],"v = Δ[ ]/Δt.");
+Q("u11","La velocidad de reacción se mide en…",["mol·L⁻¹·s⁻¹ (M/s)","mol","segundos","L/mol"],"Concentración (M) dividido tiempo (s).");
+Q("u11","En la expresión de Kc NO se incluyen…",["Los sólidos y los líquidos puros","Los gases","Los productos","Las especies en solución acuosa"],"Por eso el agua líquida y los sólidos no aparecen en Kc.");
+Q("u11","En la reacción 2 A → B, la especie A se consume…",["Al doble de velocidad que se forma B","A la mitad de velocidad que se forma B","A la misma velocidad","Cuatro veces más rápido"],"Por cada B que se forma desaparecen 2 A.");
+Q("u11","Para obtener una única velocidad de reacción, la velocidad de cada especie se…",["Divide por su coeficiente estequiométrico","Multiplica por su coeficiente","Suma con las demás","Usa sin cambios"],"v = −(1/a)Δ[A]/Δt = (1/c)Δ[C]/Δt…");
+Q("u11","En la ley v = k[A]ᵐ[B]ⁿ, los órdenes m y n…",["Se determinan experimentalmente","Son siempre los coeficientes de la ecuación","Son siempre 1","Dependen de la temperatura"],"Solo coinciden con los coeficientes en reacciones elementales.");
+Q("u11","El orden total de una reacción es…",["La suma de los órdenes parciales","El producto de los órdenes parciales","El orden más grande","Siempre 2"],"v = k[A]²[B] → orden total 3.");
+Q("u11","Si una reacción es de orden 0 respecto de A y duplico [A], la velocidad…",["No cambia","Se duplica","Se cuadruplica","Se reduce a la mitad"],"[A]⁰ = 1: la concentración no influye.");
+Q("u11","Si una reacción es de orden 1 respecto de A y duplico [A], la velocidad…",["Se duplica","Se cuadruplica","No cambia","Se reduce a la mitad"],"2¹ = 2.");
+Q("u11","Si una reacción es de orden 2 respecto de A y duplico [A], la velocidad…",["Se cuadruplica","Se duplica","Se multiplica por 8","No cambia"],"2² = 4.");
+Q("u11","Si triplico [A] y la velocidad se multiplica por 9, el orden respecto de A es…",["2","3","1","9"],"3ᵐ = 9 → m = 2.");
+Q("u11","La unidad de k para una reacción de orden total 1 es…",["s⁻¹","M·s⁻¹","M⁻¹·s⁻¹","M"],"Orden 0: M/s · orden 1: s⁻¹ · orden 2: M⁻¹s⁻¹.");
+Q("u11","La unidad de k para una reacción de orden total 0 es…",["M·s⁻¹ (mol·L⁻¹·s⁻¹)","s⁻¹","M⁻¹·s⁻¹","No tiene unidad"],"v = k, así que k tiene la misma unidad que v.");
+Q("u11","La unidad de k para una reacción de orden total 2 es…",["M⁻¹·s⁻¹ (L·mol⁻¹·s⁻¹)","s⁻¹","M·s⁻¹","M²·s⁻¹"],"k = v/[A]² = (M/s)/M².");
+Q("u11","La constante de velocidad k depende de…",["La temperatura (y del catalizador)","Las concentraciones de los reactivos","El tiempo transcurrido","El volumen del recipiente"],"Las concentraciones cambian v, pero no k.");
+Q("u11","Al aumentar la temperatura, la velocidad de reacción…",["Aumenta, porque hay más choques eficaces","Disminuye","No cambia","Aumenta solo si es endotérmica"],"Vale tanto para exo como para endo.");
+Q("u11","La energía de activación es…",["La energía mínima que necesita un choque para ser eficaz","La energía liberada por la reacción","El ΔH de la reacción","La energía cinética media de las moléculas"],"Si el choque no supera Ea, no reacciona.");
+Q("u11","Un catalizador…",["Aumenta la velocidad bajando la energía de activación, sin consumirse","Aumenta la energía de activación","Se consume durante la reacción","Cambia el ΔH de la reacción"],"Ofrece un camino alternativo con menor Ea.");
+Q("u11","Si se agrega un catalizador a un sistema en equilibrio…",["No se desplaza ni cambia K; solo se llega antes al equilibrio","Se desplaza hacia productos","Aumenta K","Se desplaza hacia reactivos"],"Acelera la ida y la vuelta por igual.");
+Q("u11","Las enzimas son…",["Catalizadores biológicos (proteínas) muy específicos","Reactivos que se consumen","Productos de la reacción","Sustancias que siempre frenan la reacción"],"Actúan sobre su sustrato en el sitio activo; dependen de T y pH.");
+Q("u11","En el equilibrio químico…",["La velocidad directa es igual a la inversa y las concentraciones quedan constantes","Las concentraciones de reactivos y productos son iguales","La reacción se detiene","Solo hay productos"],"Equilibrio dinámico: sigue ocurriendo, pero no hay cambio neto.");
+Q("u11","El principio de Le Chatelier dice que, ante una perturbación, el sistema en equilibrio…",["Se desplaza para contrarrestar la perturbación","Se desplaza para acentuarla","No cambia","Se detiene"],"Si agregás algo, lo gasta; si sacás algo, lo repone.");
+Q("u11","En una reacción exotérmica en equilibrio, si se aumenta la temperatura…",["Se desplaza hacia reactivos","Se desplaza hacia productos","No se desplaza","K aumenta"],"Exo: el calor es “producto”. Agregar calor → lo gasta yendo hacia reactivos.");
+Q("u11","En un equilibrio, si se agrega un reactivo…",["Se desplaza hacia productos","Se desplaza hacia reactivos","No se desplaza","Cambia el valor de K"],"Lo consume formando productos. K no cambia (solo con T).");
+Q("u11","En N₂(g) + 3 H₂(g) ⇌ 2 NH₃(g), si se aumenta la presión achicando el volumen…",["Se desplaza hacia productos (menos moles de gas)","Se desplaza hacia reactivos","No se desplaza","La reacción se detiene"],"4 moles de gas a la izquierda, 2 a la derecha.");
+
+/* ===== U13 ÁCIDO-BASE ===== */
+Q("u13","Según Brønsted-Lowry, un ácido es una sustancia que…",["Dona protones (H⁺)","Acepta protones","Dona OH⁻","Acepta electrones"],"La base es la que acepta H⁺.");
+Q("u13","Según Brønsted-Lowry, una base es una sustancia que…",["Acepta protones (H⁺)","Dona protones","Siempre tiene OH en la fórmula","Dona electrones al agua"],"Por eso el NH₃ es base aunque no tenga OH.");
+Q("u13","Que el agua sea anfótera significa que…",["Puede actuar como ácido o como base","Siempre es neutra","No se ioniza nunca","Solo actúa como ácido"],"Con HCl es base; con NH₃ es ácido.");
+Q("u13","La base conjugada del HF es…",["F⁻","H₂F⁺","OH⁻","H₃O⁺"],"Es lo que queda cuando el ácido pierde su H⁺.");
+Q("u13","El ácido conjugado del NH₃ es…",["NH₄⁺","NH₂⁻","H₂O","OH⁻"],"NH₃ acepta un H⁺ y queda NH₄⁺.");
+Q("u13","Un ácido fuerte es el que…",["Se ioniza completamente en agua","Se ioniza parcialmente","Está muy concentrado","Tiene un Ka chico"],"Fuerte/débil habla de cuánto se ioniza, no de la concentración.");
+Q("u13","¿Cuál de estos es un ácido fuerte?",["HNO₃","HF","CH₃COOH (acético)","HClO"],"Fuertes: HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄.");
+Q("u13","¿Cuál de estos es un ácido débil?",["HF","HCl","HBr","HNO₃"],"El HF engaña: es un halogenuro de hidrógeno pero es débil.");
+Q("u13","¿Cuál de estas es una base fuerte?",["NaOH","NH₃","CH₃NH₂ (metilamina)","F⁻"],"Hidróxidos de grupos 1 y 2: NaOH, KOH, Ca(OH)₂…");
+Q("u13","¿Cuál de estas es una base débil?",["NH₃","KOH","NaOH","Ca(OH)₂"],"Amoníaco y aminas son bases débiles.");
+Q("u13","Si un enunciado te da el valor de Ka de un ácido, ese ácido es…",["Débil","Fuerte","Neutro","Una base"],"Los fuertes no tienen Ka: se ionizan todo.");
+Q("u13","A igual concentración, el ácido con mayor Ka…",["Es más fuerte: da más H₃O⁺ y menor pH","Es más débil","Da mayor pH","Se ioniza menos"],"Ka grande = se ioniza más.");
+Q("u13","Cuanto menor es el pKa de un ácido…",["Más fuerte es el ácido","Más débil es el ácido","Más básico es","Menor grado de disociación tiene"],"pKa = −log Ka: Ka grande → pKa chico.");
+Q("u13","El pH se define como…",["−log [H₃O⁺]","log [H₃O⁺]","[H₃O⁺] / 14","−log [OH⁻]"],"−log [OH⁻] es el pOH.");
+Q("u13","A 25 °C, pH + pOH es igual a…",["14","7","1","0"],"Sale de Kw = 10⁻¹⁴.");
+Q("u13","El producto iónico del agua (Kw) a 25 °C es…",["[H₃O⁺]·[OH⁻] = 1,0×10⁻¹⁴","[H₃O⁺]·[OH⁻] = 1,0×10⁻⁷","[H₃O⁺] + [OH⁻] = 14","Depende del pH de la solución"],"Vale para cualquier solución acuosa a 25 °C.");
+Q("u13","En una solución neutra a 25 °C…",["[H₃O⁺] = [OH⁻] = 1×10⁻⁷ M y pH = 7","[H₃O⁺] = 0","pH = 0","pH = 14"],"Neutra = igual cantidad de H₃O⁺ y OH⁻.");
+Q("u13","Una solución de NH₃ en agua tiene pH…",["Mayor que 7","Menor que 7","Igual a 7","Igual a 0"],"NH₃ es base: genera OH⁻.");
+Q("u13","Si el pH baja 1 unidad, la [H₃O⁺]…",["Se multiplica por 10","Aumenta en 1 M","Se duplica","Se divide por 10"],"La escala es logarítmica.");
+Q("u13","El grado de ionización α de un ácido débil es…",["La fracción del ácido que se ionizó: x / C","Igual a Ka","pH / 14","C / x"],"En porcentaje: α × 100.");
+Q("u13","Para un ácido fuerte, el grado de ionización α es…",["1 (100 %)","0","0,5","Depende de la Ka"],"Se ioniza todo.");
+Q("u13","En la tabla de equilibrio de un ácido débil HA de concentración inicial C, la [HA] en el equilibrio es…",["C − x","C","x","C + x"],"Se ionizó x, así que queda C − x sin ionizar.");
+Q("u13","En el equilibrio de un ácido débil HA (sin otras fuentes), [A⁻] y [H₃O⁺] son…",["Iguales (las dos valen x)","[A⁻] el doble que [H₃O⁺]","[A⁻] = 0","[H₃O⁺] = C"],"Por cada HA que se ioniza sale un A⁻ y un H₃O⁺.");
+Q("u13","Para un par ácido-base conjugado, Ka · Kb es igual a…",["Kw","1","14","0"],"Ka · Kb = 1,0×10⁻¹⁴ a 25 °C.");
+Q("u13","¿Por qué el agua no aparece en la expresión de Ka?",["Porque es un líquido puro (el solvente)","Porque no participa","Porque es un producto","Porque es una base fuerte"],"Igual que en Kc: no van sólidos ni líquidos puros.");
+
+/* ===== IDENTIFICAR (enunciados reales de los modelos) ===== */
+const TOP=["Gases","Soluciones / diluciones","Estequiometría / reacciones","Equilibrio / Le Chatelier","Ácido-base","Cinética"];
+function I(q,t,e){const o=[TOP[t]].concat(TOP.filter((_,i)=>i!==t));BANK.id.push({id:"id-"+(BANK.id.length+1),u:"id",q,o,e,fixed:true})}
+I("Recipientes A y B de igual volumen: A con 1 mol de O₂(g), B con 1 mol de H₂(g), misma temperatura. ¿La densidad en A es mayor, menor o igual que en B?",0,"Gas en recipiente, sin reacción, pregunta por densidad → gases (ej. 1).");
+I("Recipiente rígido de 10,0 dm³ con 15,3 g de N₂(g) y 5,20 g de O₂(g) a 150 K. Se extrae todo el O₂. Calcular la presión final en atm.",0,"dm³, K, atm, mezcla de gases → gases (ej. 2).");
+I("A 50,0 mL de solución de MgCl₂ 0,500 M se le agregan 500 mL de agua. Calcular la concentración de iones cloruro.",1,"Se agrega agua a una solución → dilución, con iones (ej. 3).");
+I("Calcular la masa de soluto necesaria para preparar 80,0 mL de solución de AgNO₃ 0,0250 M.",1,"Solución con M, sin reacción → soluciones (ej. 4).");
+I("Balancear: Al(s) + Cu²⁺(ac) → Al³⁺(ac) + Cu(s)",2,"Ecuación con → y “balancear” → reacciones (redox) (ej. 5).");
+I("Cl₂(g) + 2 NaOH(aq) → NaCl + NaClO + H₂O. Calcular la masa de NaClO formada con 1,00 mol de Cl₂ y 60,0 g de NaOH, rendimiento 75,0 %.",2,"Reacción con → + cantidades + rendimiento → estequiometría (ej. 6). Que haya un gas no lo hace de gases.");
+I("60,0 g de SiO₂ con impurezas inertes reaccionan con exceso de HF 5,00 M. Calcular el % de impurezas de la muestra.",2,"Impurezas / pureza con una reacción → estequiometría (ej. 7). La solución de HF es solo un dato.");
+I("En un recipiente de 100 L se introducen 2,50 mol de HBr. 2 HBr(g) ⇌ H₂(g) + Br₂(g), Kc = 0,125. Calcular [HBr] en el equilibrio.",3,"Flecha doble ⇌ y Kc → equilibrio (ej. 8).");
+I("Soluciones: HNO₃ pH 3; NH₃ 0,100 M con [OH⁻] = 1,33×10⁻³ M; ácido bromoacético; NaOH pOH 4. Indicar el pOH de la que se preparó con una base débil.",4,"pH, pOH, ácidos y bases → ácido-base (ej. 9).");
+I("Calcular la [H₃O⁺] de una solución de ácido cloroacético 0,0150 M (Ka = 1,36×10⁻⁴).",4,"Ka y [H₃O⁺] → ácido-base (ej. 10).");
+I("Según la Teoría Cinética, ¿cuál es la relación entre la energía cinética de las moléculas de un gas y la temperatura?",0,"Ojo: “teoría cinética de los gases” es de gases, no de cinética química (ej. 1).");
+I("Se cargaron 9,30 m³ de GNC medidos a 0 °C y 1 atm. Calcular la presión a 20,0 °C en un tanque rígido de 57,0 L.",0,"Volumen, presión, temperatura de un gas → gases (ej. 2).");
+I("Se diluyen con agua 40,0 mL de MgCl₂ 2,50 % m/V hasta 200 mL. Calcular la molaridad resultante.",1,"Dilución + cambio de unidad → soluciones (ej. 3).");
+I("Solución de Al₂(SO₄)₃ 0,150 M. Calcular la concentración del anión en % m/V.",1,"Concentración de un ion, sin reacción → soluciones (ej. 4).");
+I("MnO₂ + 4 HCl → MnCl₂ + Cl₂ + 2 H₂O. Indicar la cantidad de H₂O que se obtiene a partir de 8,70 g del agente oxidante.",2,"Reacción con → + agente oxidante → reacciones/estequiometría (ej. 5).");
+I("Cr₂O₃(s) + 2 Al(s) → 2 Cr(l) + Al₂O₃(s). Se mezclan 38,0 g de Cr₂O₃ con 18,0 g de Al. Calcular la masa de reactivo en exceso que sobra.",2,"Reactivo en exceso → estequiometría (ej. 7).");
+I("N₂(g) + 3 H₂(g) ⇌ 2 NH₃(g), exotérmica. ¿Qué perturbación hace que evolucione hacia productos?",3,"⇌ + exotérmica + perturbación → Le Chatelier (ej. 8).");
+I("Ordenar de menor a mayor pH: HCl 1,00×10⁻⁴ M; NaOH 0,100 M; agua pura; ácido acético de pH 2,30.",4,"Ordenar por pH → ácido-base (ej. 9).");
+I("Una solución de ácido bromoacético 0,0472 M tiene pH = 2,15. Calcular la Ka.",4,"pH y Ka → ácido-base (ej. 10).");
+I("Recipiente con tapa móvil: se aumenta la temperatura a presión constante. ¿Qué ocurre con la densidad del gas?",0,"Tapa móvil, P, T, densidad de un gas → gases (ej. 1).");
+I("Se diluyeron 40,0 mL de CaCl₂ concentrada hasta 250 mL; la concentración de aniones en la diluida fue 0,0450 M. Calcular la molaridad inicial.",1,"Dilución + aniones → soluciones (ej. 3).");
+I("Calcular la masa de agua en 4500 mL de solución de NaCl 15,0 % m/m con densidad 1,11 g/mL.",1,"% m/m y densidad, sin reacción → soluciones (ej. 4).");
+I("CaCO₃(s) → CaO(s) + CO₂(g). 142 g de una muestra de CaCO₃ dan 42,6 g de CO₂. Calcular la pureza de la muestra.",2,"Reacción + pureza → estequiometría (ej. 7).");
+I("CO(g) + H₂O(g) ⇌ CO₂(g) + H₂(g), exotérmica. Si se aumenta T, ¿qué ocurre con las cantidades de CO y H₂O?",3,"⇌ + exotérmica + aumento de T → Le Chatelier (ej. 8).");
+I("Ácidos de igual concentración: arsenioso (Ka 5,1×10⁻¹⁰), acético (pKa 4,75), HF (Ka 6,8×10⁻⁴), hipocloroso (pKa 7,53). ¿Qué pKa tiene el que da mayor [H₃O⁺]?",4,"Ka, pKa → ácido-base (ej. 9).");
+I("En 2 N₂O₅ → 4 NO₂ + O₂, el NO₂ se forma a 0,040 mol·L⁻¹·s⁻¹. Calcular la velocidad de consumo de N₂O₅.",5,"Velocidad en mol·L⁻¹·s⁻¹ → cinética.");
+I("Con una tabla de experimentos de [A], [B] y velocidad inicial, determinar los órdenes de reacción y la constante k.",5,"Órdenes y k → cinética.");
+I("152 g de MgCO₃ reaccionan con 2500 cm³ de HCl 2,00 M: MgCO₃ + 2 HCl → MgCl₂ + CO₂ + H₂O. ¿Cuánto CO₂ se obtiene con rendimiento 75 %?",2,"Hay solución (HCl 2 M) y gas (CO₂), pero manda la reacción con → → estequiometría.");
+
+const UNITS={id:{n:"Identificar ejercicios",c:"var(--u0)"},u8:{n:"U8 · Gases",c:"var(--u8)"},u10:{n:"U10 · Reacciones",c:"var(--u10)"},u9:{n:"U9 · Soluciones",c:"var(--u9)"},u11:{n:"U11 · Cinética + Le Chatelier",c:"var(--u11)"},u13:{n:"U13 · Ácido-base",c:"var(--u13)"}};
+const ALL={};Object.values(BANK).flat().forEach(q=>ALL[q.id]=q);
+const KEY="cbc-quimica-2p-v1";
+let S={};try{S=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){S={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function stats(ids){let ok=0,bad=0,none=0;ids.forEach(id=>{const r=S[id];if(!r)none++;else if(r.ok)ok++;else bad++});return{ok,bad,none,total:ids.length}}
+const idsOf=u=>BANK[u].map(q=>q.id);
+const failed=ids=>ids.filter(id=>S[id]&&!S[id].ok);
+const fresh=ids=>ids.filter(id=>!S[id]);
+
+/* ---------- navegación ---------- */
+const VIEWS=["identificar","u8","u10","u9","u11","u13","panel"];
+function route(){let v=location.hash.slice(1);if(!VIEWS.includes(v))v="identificar";
+  document.querySelectorAll("section.view").forEach(s=>s.classList.toggle("on",s.id===v));
+  document.querySelectorAll("#tabs a").forEach(a=>{const on=a.getAttribute("href")==="#"+v;a.classList.toggle("on",on);if(on)a.scrollIntoView({inline:"center",block:"nearest"})});
+  if(v==="panel")renderPanel();
+  window.scrollTo(0,0)}
+addEventListener("hashchange",route);
+
+/* ---------- diapositivas ---------- */
+document.querySelectorAll(".slides").forEach(box=>{
+  const sl=[...box.querySelectorAll(".slide")];let i=0;
+  const nav=document.createElement("div");nav.className="snav";
+  nav.innerHTML='<button>‹ Anterior</button><div class="dots">'+sl.map(()=>"<i></i>").join("")+'</div><button>Siguiente ›</button>';
+  box.appendChild(nav);const [p,n]=nav.querySelectorAll("button");const dots=nav.querySelectorAll(".dots i");const lab=box.querySelector(".sh .n");
+  function show(){sl.forEach((s,k)=>s.classList.toggle("on",k===i));dots.forEach((d,k)=>d.classList.toggle("on",k===i));p.disabled=i===0;n.disabled=i===sl.length-1;if(lab)lab.textContent=(i+1)+" / "+sl.length}
+  p.onclick=()=>{i--;show()};n.onclick=()=>{i++;show()};show()});
+
+/* ---------- práctica ---------- */
+function practiceHome(el,u){
+  const ids=idsOf(u),st=stats(ids),f=failed(ids),nw=fresh(ids);
+  const isId=u==="id";
+  el.innerHTML=`<h2>✍️ Practicar${isId?": ¿de qué tema es?":""}</h2>
+  <p class="small">${isId?"Leé el enunciado real de un parcial y elegí el tema. No hace falta resolverlo.":"Preguntas teóricas, sin cuentas. "+ids.length+" preguntas."}</p>
+  <div class="stat"><div class="meter"><span class="g" style="width:${st.ok/st.total*100}%"></span><span class="r" style="width:${st.bad/st.total*100}%"></span></div><b class="small">${st.ok} ✔ · ${st.bad} ✘ · ${st.none} sin hacer</b></div>
+  <div class="modes">
+   <button class="btn fill" data-m="all">Empezar (todas mezcladas)</button>
+   <button class="btn" data-m="fail" ${f.length?"":"disabled"}>Solo falladas (${f.length})</button>
+   <button class="btn" data-m="new" ${nw.length?"":"disabled"}>Sin responder (${nw.length})</button>
+  </div>`;
+  el.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{
+    const m=b.dataset.m;const list=m==="fail"?f:m==="new"?nw:ids;
+    startQuiz(el,shuffle(list),()=>practiceHome(el,u))});
+}
+function startQuiz(el,list,back){
+  const st={list,pos:0,ans:{}};
+  function render(){
+    if(st.pos>=st.list.length)return summary();
+    const id=st.list[st.pos],q=ALL[id];
+    if(!st.order||st.order.id!==id){st.order={id,opts:q.fixed?q.o.slice():shuffle(q.o)}}
+    const opts=st.order.opts,given=st.ans[id];
+    let h=`<div class="qbox"><div class="qh"><span>${UNITS[q.u].n}</span><span>${st.pos+1} / ${st.list.length}</span></div>
+    <div class="prog"><i style="width:${(st.pos)/st.list.length*100}%"></i></div>
+    <p class="qtext">${esc(q.q)}</p>`;
+    opts.forEach((o,k)=>{let cl="";if(given!==undefined){if(o===q.o[0])cl="ok";else if(o===given)cl="bad"}
+      h+=`<button class="opt ${cl}" data-k="${k}" ${given!==undefined?"disabled":""}><b>${"ABCDEF"[k]}</b>${esc(o)}</button>`});
+    if(given!==undefined){const ok=given===q.o[0];h+=`<div class="why ${ok?"okk":"badd"}"><b>${ok?"¡Bien!":"Era: "+esc(q.o[0])}</b><br>${esc(q.e)}</div>`}
+    h+=`<div class="qnav"><button class="btn" data-a="prev" ${st.pos?"":"disabled"}>‹</button><button class="btn" data-a="out">Salir</button><button class="btn fill" data-a="next" ${given===undefined?"disabled":""}>${st.pos===st.list.length-1?"Ver resultado":"Siguiente ›"}</button></div></div>`;
+    el.innerHTML=h;
+    el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const o=opts[+b.dataset.k];st.ans[id]=o;const ok=o===q.o[0];const prev=S[id]||{w:0};S[id]={ok,w:prev.w+(ok?0:1),t:Date.now()};save();render()});
+    el.querySelector('[data-a="prev"]').onclick=()=>{st.pos--;st.order=null;render()};
+    el.querySelector('[data-a="next"]').onclick=()=>{st.pos++;st.order=null;render();el.scrollIntoView({block:"start",behavior:"smooth"})};
+    el.querySelector('[data-a="out"]').onclick=back;
+  }
+  function summary(){
+    const ok=st.list.filter(id=>st.ans[id]===ALL[id].o[0]);const bad=st.list.filter(id=>st.ans[id]!==undefined&&st.ans[id]!==ALL[id].o[0]);
+    el.innerHTML=`<div class="sum"><div class="big">${ok.length} / ${st.list.length}</div><p>${ok.length===st.list.length?"¡Perfecto! 🎉":ok.length>=st.list.length*.6?"¡Bien! Repasá las que fallaste.":"Volvé a leer la teoría de arriba y repetí las falladas."}</p>
+    <div class="modes" style="justify-content:center"><button class="btn fill" data-a="rep" ${bad.length?"":"disabled"}>Repetir las ${bad.length} falladas</button><button class="btn" data-a="back">Volver</button></div></div>`;
+    el.querySelector('[data-a="rep"]').onclick=()=>startQuiz(el,shuffle(bad),back);
+    el.querySelector('[data-a="back"]').onclick=back;
+  }
+  render();
+}
+document.querySelectorAll(".practice[data-quiz]").forEach(el=>{const u=el.dataset.quiz;if(BANK[u])practiceHome(el,u)});
+function refreshHomes(){document.querySelectorAll(".practice[data-quiz]").forEach(el=>{const u=el.dataset.quiz;if(BANK[u]&&el.querySelector(".modes [data-m]"))practiceHome(el,u)})}
+
+/* ---------- panel ---------- */
+function renderPanel(){
+  const all=Object.keys(ALL),t=stats(all);
+  $("#pTotal").innerHTML=`<div><b>Total</b><div class="meter" style="margin-top:6px"><span class="g" style="width:${t.ok/t.total*100}%"></span><span class="r" style="width:${t.bad/t.total*100}%"></span></div></div><b>${t.ok} ✔ · ${t.bad} ✘ · ${t.none} sin hacer</b>`;
+  $("#pUnits").innerHTML=Object.keys(UNITS).map(u=>{const ids=idsOf(u),s=stats(ids);const tab=u==="id"?"identificar":u;
+    return `<div class="card pcard" style="--tc:${UNITS[u].c}"><h3>${UNITS[u].n}</h3>
+    <div class="meter"><span class="g" style="width:${s.ok/s.total*100}%"></span><span class="r" style="width:${s.bad/s.total*100}%"></span></div>
+    <p class="small" style="margin:6px 0">${s.ok} bien · ${s.bad} falladas · ${s.none} sin hacer (de ${s.total})</p>
+    <div class="modes" style="margin:0"><button class="btn fill" data-pu="${u}" ${s.bad?"":"disabled"}>Falladas (${s.bad})</button><a class="btn" style="text-decoration:none" href="#${tab}">Ir a la teoría</a></div></div>`}).join("");
+  document.querySelectorAll("[data-pu]").forEach(b=>b.onclick=()=>runPanel(failed(idsOf(b.dataset.pu))));
+}
+function runPanel(list){const el=$("#pQuiz");if(!list.length){el.hidden=false;el.innerHTML='<p class="small">No hay preguntas en este grupo todavía. 🎉</p>';return}el.hidden=false;startQuiz(el,shuffle(list),()=>{el.hidden=true;renderPanel();refreshHomes()});el.scrollIntoView({behavior:"smooth"})}
+document.querySelectorAll("[data-pm]").forEach(b=>b.onclick=()=>{const all=Object.keys(ALL);const m=b.dataset.pm;
+  runPanel(m==="fail"?failed(all):m==="new"?fresh(all):shuffle(all).slice(0,20))});
+let armed=false;$("#reset").onclick=()=>{if(!armed){armed=true;$("#resetMsg").textContent="Tocá de nuevo para confirmar.";setTimeout(()=>{armed=false;$("#resetMsg").textContent=""},4000);return}
+  S={};save();armed=false;$("#resetMsg").textContent="Progreso borrado.";renderPanel();refreshHomes()};
+addEventListener("hashchange",refreshHomes);
+route();
+
+</script>
+</body>
+</html>
